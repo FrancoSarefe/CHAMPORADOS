@@ -14,11 +14,12 @@ import jdbc.JdbcConnectionManager;
 
 public class TransactionRepository {
 	
-	private final static String SELECT = "SELECT t.id, t.transaction_number, t.cart_number, t.room, t.grand_total, t.date_created, t.status";
-	private final static String SELECT_ALL = SELECT + " FROM transactions t";
-	private final static String SELECT_BY_USER_ID = SELECT_ALL + " FROM transaction t, cart_item c, champ_user u"
-													+ " WHERE t.cart_number = c.cart_number AND c.user_number = u.user_number";
-	private final static String INSERT_TRANSACTION_DETAILS = "INSERT INTO transaction (id, transaction_number, cart_number, room, grand_total, date_created, status) VALUES (?,?,?,?,?,?,?)";
+	private final static String SELECT = "Select *";
+			//"SELECT t.id, t.transaction_number, t.cart_number, t.room, t.grand_total, t.date_created, t.status";
+	private final static String SELECT_ALL = SELECT + " FROM transaction t";
+	private final static String SELECT_BY_USER_ID = SELECT_ALL + " FROM transaction t, cart_item c"
+													+ " WHERE t.cart_number = c.cart_number AND c.user_number = ?";
+	private final static String INSERT_TRANSACTION_DETAILS = "INSERT INTO transaction (transaction_number, cart_number, room, grand_total, date_created, status) VALUES (?,?,?,?,?,'Pending')";
 	private final static String UPDATE_TRANSACTION_STATUS = "UPDATE transaction SET status = ? WHERE transaction_number = ?";
 	
 	private final static int COLUMN_ID = 1;
@@ -38,26 +39,28 @@ public class TransactionRepository {
     public List<TransactionEntity> findAll() {
     	try {
             final Connection connection = jdbcConnectionManager.getConnection();
-            final PreparedStatement findAllQuery = connection.prepareStatement(SELECT_ALL);
-            final ResultSet resultSet = findAllQuery.executeQuery();
+            final PreparedStatement statement = connection.prepareStatement(SELECT_ALL);
+            final ResultSet resultSet = statement.executeQuery();
             final List<TransactionEntity> transactions = new ArrayList<>();
             while (resultSet.next()) {
-                toTransaction(resultSet, transactions);
+                transactions.add(toTransaction(resultSet));
             }
+            System.out.println(transactions.size());
             return transactions;
         } catch (Exception e) {
             throw DataAccessException.instance("Failed to retrieve transactions: " + e.getMessage());
         }
     }
     
-    public List<TransactionEntity> findByUserId() {
+    public List<TransactionEntity> findByUserId(int id) {
     	try {
             final Connection connection = jdbcConnectionManager.getConnection();
             final PreparedStatement statement = connection.prepareStatement(SELECT_BY_USER_ID);
+            statement.setInt(1, id);
             final ResultSet resultSet = statement.executeQuery();
             final List<TransactionEntity> transactions = new ArrayList<>();
             while (resultSet.next()) {
-                toTransaction(resultSet, transactions);
+            	transactions.add(toTransaction(resultSet));
             }
 
             return transactions;
@@ -80,18 +83,16 @@ public class TransactionRepository {
 		}
     }
     
-    public void insertTransaction(int id, String transactionNumber, String cartNumber, String room, 
-    							  float grandTotal, String dateCreated, String status) {
+    public void insertTransaction(String transactionNumber, String cartNumber, String room, 
+    							  float grandTotal, String dateCreated) {
 		try {
 			final Connection connection = jdbcConnectionManager.getConnection();
             final PreparedStatement statement = connection.prepareStatement(INSERT_TRANSACTION_DETAILS);
-	    	statement.setInt(COLUMN_ID, id);
-	    	statement.setString(COLUMN_TRANSACTION_NUMBER, transactionNumber);
-	    	statement.setString(COLUMN_CART_NUMBER, cartNumber);
-	    	statement.setString(COLUMN_ROOM, room);
-	    	statement.setFloat(COLUMN_GRAND_TOTAL, grandTotal);
-	    	statement.setString(COLUMN_DATE_CREATED, dateCreated);
-	    	statement.setString(COLUMN_STATUS, status);
+	    	statement.setString(1, transactionNumber);
+	    	statement.setString(2, cartNumber);
+	    	statement.setString(3, room);
+	    	statement.setFloat(4, grandTotal);
+	    	statement.setString(5, dateCreated);
 	    	
 	    	final ResultSet resultSet = statement.executeQuery();
 	    	
@@ -100,7 +101,7 @@ public class TransactionRepository {
 		}
     }
 
-	private void toTransaction(final ResultSet resultSet, final List<TransactionEntity> transactions)
+	private TransactionEntity toTransaction(final ResultSet resultSet)
 			throws SQLException {
 		TransactionEntity transaction = new TransactionEntity
 			(
@@ -112,6 +113,6 @@ public class TransactionRepository {
 				resultSet.getString(COLUMN_DATE_CREATED),
 				resultSet.getString(COLUMN_STATUS)
 			);
-		transactions.add(transaction);
+		return transaction;
 	}
 }
