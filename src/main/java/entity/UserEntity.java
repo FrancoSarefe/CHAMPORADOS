@@ -18,7 +18,7 @@ public class UserEntity {
 	private String userNumber;
 	private String password;
 	private Date dateCreated;
-	private boolean isAdmin;
+	private Boolean isAdmin;
 	private String walletNumber;
 	private String personNumber;
 }

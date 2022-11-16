@@ -1,5 +1,8 @@
 package bean;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.AllArgsConstructor;
@@ -14,17 +17,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegistrationFormBean extends FormBean {
-	private String username;
 	private String firstName;
+	private String middleName;
 	private String lastName;
-	private String email;
+	private String companyEmail;
 	private String password;
 	private String confirmPassword;
+	private Date birthDate;
+	private String contactNumber;
+	private BigDecimal amount;
 	
 	@Override
 	public boolean validate() {
-		if(StringUtils.isEmpty(username)) {
-			addError("username", "Username required.");
+		if(StringUtils.isEmpty(companyEmail)) {
+			addError("email", "Email required.");
 		}
 		
 		if(StringUtils.isEmpty(firstName)) {
@@ -33,10 +39,6 @@ public class RegistrationFormBean extends FormBean {
 		
 		if(StringUtils.isEmpty(lastName)) {
 			addError("lastName", "Last name required.");
-		}
-		
-		if(StringUtils.isEmpty(email)) {
-			addError("email", "Email required.");
 		}
 		
 		if(StringUtils.isEmpty(password)) {

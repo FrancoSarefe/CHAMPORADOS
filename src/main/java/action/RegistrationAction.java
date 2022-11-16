@@ -23,10 +23,11 @@ public class RegistrationAction implements Action {
 	
 	private RegistrationFormBean toRegistrationFormBean(HttpServletRequest request) {
 		RegistrationFormBean registrationFormBean = new RegistrationFormBean();
-		registrationFormBean.setUsername(request.getParameter("username"));
+		registrationFormBean.setCompanyEmail(request.getParameter("companyEmail"));
 		registrationFormBean.setFirstName(request.getParameter("firstName"));
 		registrationFormBean.setLastName(request.getParameter("lastName"));
-		registrationFormBean.setEmail(request.getParameter("email"));
+		registrationFormBean.setLastName(request.getParameter("birthDate"));
+		registrationFormBean.setLastName(request.getParameter("contactNumber"));
 		registrationFormBean.setPassword(request.getParameter("password"));
 		registrationFormBean.setConfirmPassword(request.getParameter("confirmPassword"));
 		return registrationFormBean;
