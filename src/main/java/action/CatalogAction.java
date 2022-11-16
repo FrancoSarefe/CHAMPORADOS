@@ -1,6 +1,7 @@
 package action;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,8 +19,8 @@ public class CatalogAction implements Action {
     private final JdbcConnectionManager jdbcConnectionManager;
     private final ToyRepository toyRepository;
 
-    public CatalogAction() {
-        jdbcConnectionManager = new JdbcConnectionManager();
+    public CatalogAction() throws SQLException {
+        jdbcConnectionManager = (JdbcConnectionManager) JdbcConnectionManager.instance().initiate().getConnection();
         toyRepository = new ToyRepository(jdbcConnectionManager);
         toyCatalogService = new ToyCatalogService(toyRepository);
     }
