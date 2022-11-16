@@ -16,15 +16,9 @@ public class PersonRepository {
     private final static String PERSON_FIND_ALL = "SELECT * FROM Person";
     private static final String INSERT_PERSON = "INSERT INTO Person(person_number, first_name, middle_name, last_name, birth_date, contact_number, company_email) VALUES (?,?,?,?,?,?,?)";
 
-    private JdbcConnectionManager jdbcConnectionManager;
-
-    public PersonRepository(JdbcConnectionManager jdbcConnectionManager) {
-        this.jdbcConnectionManager = jdbcConnectionManager;
-    }
-
     public List<PersonEntity> findAll() {
         try {
-            final Connection connection = jdbcConnectionManager.getConnection();
+        	final Connection connection = JdbcConnectionManager.instance().initiate().getConnection();
 
             final PreparedStatement findAllQuery = connection.prepareStatement(PERSON_FIND_ALL);
 
@@ -43,7 +37,7 @@ public class PersonRepository {
 
     public boolean insertPerson(String personNumber, String firstName, String middleName, String lastName, Date birthDate, String contactNumber, String companyEmail) {
 		try {
-			final Connection connection = jdbcConnectionManager.getConnection();
+			final Connection connection = JdbcConnectionManager.instance().initiate().getConnection();
 
             final PreparedStatement insertQuery = connection.prepareStatement(INSERT_PERSON);
             

@@ -16,17 +16,10 @@ public class UserRepository {
 	
     private final static String USER_FIND_ALL = "SELECT * FROM CHAMP_User";
     private static final String INSERT_USER = "INSERT INTO CHAMP_User(user_number, password, date_created, is_admin, wallet_number, person_number) VALUES (?,?,?,?,?,?)";
- 
-
-    private JdbcConnectionManager jdbcConnectionManager;
-
-    public UserRepository(JdbcConnectionManager jdbcConnectionManager) {
-        this.jdbcConnectionManager = jdbcConnectionManager;
-    }
 
     public List<UserEntity> findAll() {
         try {
-            final Connection connection = jdbcConnectionManager.getConnection();
+        	final Connection connection = JdbcConnectionManager.instance().initiate().getConnection();
 
             final PreparedStatement findAllQuery = connection.prepareStatement(USER_FIND_ALL);
 
@@ -45,7 +38,7 @@ public class UserRepository {
 
     public boolean insertUser(String userNumber, String password, Date dateCreated, Boolean isAdmin, String walletNumber, String personNumber) {
 		try {
-			final Connection connection = jdbcConnectionManager.getConnection();
+			final Connection connection = JdbcConnectionManager.instance().initiate().getConnection();
 
             final PreparedStatement insertQuery = connection.prepareStatement(INSERT_USER);
             
