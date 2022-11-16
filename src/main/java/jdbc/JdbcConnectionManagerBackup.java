@@ -9,24 +9,12 @@ import org.apache.logging.log4j.Logger;
 
 import config.AppConfiguration;
 
-public class JdbcConnectionManager {
+public class JdbcConnectionManagerBackup {
 
     private static final Logger logger = LogManager.getLogger(JdbcConnectionManager.class);
-    
-    private static JdbcConnectionManager INSTANCE;
-
-    public static JdbcConnectionManager instance() {
-        if (INSTANCE == null) {
-            INSTANCE = new JdbcConnectionManager();
-        }
-        return INSTANCE;
-    }
-
-    private JdbcConnectionManager() {
-    	//initiate method included here if not singleton
-    }
-    
-    public JdbcConnectionManager initiate() {
+ 
+    //singleton
+    public JdbcConnectionManagerBackup() {
         try {
             Class.forName(AppConfiguration.getString("jdbc.driver"));
             logger.info("operation=load_jdbc_driver, message=jdbc_driver_loaded_successfully, status=success");
@@ -34,7 +22,6 @@ public class JdbcConnectionManager {
         } catch (ClassNotFoundException e) {
             logger.error("operation=load_jdbc_driver, error_message={}", e.getMessage());
         }
-        return this;
     }
 
     public Connection getConnection() throws SQLException {

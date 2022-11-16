@@ -17,15 +17,9 @@ public class BalanceRepository {
     private final static String BALANCE_FIND_ALL = "SELECT * FROM Balance";
     private static final String INSERT_BALANCE = "INSERT INTO Balance(wallet_number, amount) VALUES (?,?)";
 
-    private JdbcConnectionManager jdbcConnectionManager;
-
-    public BalanceRepository(JdbcConnectionManager jdbcConnectionManager) {
-        this.jdbcConnectionManager = jdbcConnectionManager;
-    }
-
     public List<BalanceEntity> findAll() {
         try {
-            final Connection connection = jdbcConnectionManager.getConnection();
+        	final Connection connection = JdbcConnectionManager.instance().initiate().getConnection();
 
             final PreparedStatement findAllQuery = connection.prepareStatement(BALANCE_FIND_ALL);
 
@@ -44,7 +38,7 @@ public class BalanceRepository {
 
     public boolean insertBalance(String walletNumber, BigDecimal amount) {
 		try {
-			final Connection connection = jdbcConnectionManager.getConnection();
+			final Connection connection = JdbcConnectionManager.instance().initiate().getConnection();
 
             final PreparedStatement insertQuery = connection.prepareStatement(INSERT_BALANCE);
             
