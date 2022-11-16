@@ -1,7 +1,5 @@
 package entity;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
