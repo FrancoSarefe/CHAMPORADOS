@@ -40,6 +40,23 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<hr/>
+			<b>Update Status by ID</b>
+			<br/>
+			<form action="./transactions?action=updateStatus" method="POST">
+				<!-- Insert dropdown list here for different status values -->
+				<select id="status-update" name="status-update" required>
+					<option value="" disabled hidden selected>Select Status Update</option>
+					<option value="Pending">Pending</option>
+					<option value="Processing">Processing</option>
+					<option value="Cancelled">Cancelled</option>
+					<option value="Complete">Completed</option>
+				</select>
+				<!-- Insert text box here to indicate ID -->
+				<input type="text" id="selected-transaction" name="selected-transaction" placeholder="Indicate Transaction Number here..." required>
+				<!-- Insert submit button for form -->
+				<input type="submit" value="Update Status">
+			</form>
 		</c:if>
 	</body>
 </html>

@@ -14,12 +14,11 @@ import jdbc.JdbcConnectionManager;
 
 public class TransactionRepository {
 	
-	private final static String SELECT = "Select *";
-			//"SELECT t.id, t.transaction_number, t.cart_number, t.room, t.grand_total, t.date_created, t.status";
+	private final static String SELECT = "SELECT t.id, t.transaction_number, t.cart_number, t.room, t.grand_total, t.date_created, t.status";
 	private final static String SELECT_ALL = SELECT + " FROM transaction t";
 	private final static String SELECT_BY_USER_ID = SELECT_ALL + " FROM transaction t, cart_item c"
 													+ " WHERE t.cart_number = c.cart_number AND c.user_number = ?";
-	private final static String INSERT_TRANSACTION_DETAILS = "INSERT INTO transaction (transaction_number, cart_number, room, grand_total, date_created, status) VALUES (?,?,?,?,?,'Pending')";
+	private final static String INSERT_TRANSACTION_DETAILS = "INSERT INTO transaction (transaction_number, cart_number, room, grand_total, date_created, status) VALUES (?,?,?,?,SYSDATE,'Pending')";
 	private final static String UPDATE_TRANSACTION_STATUS = "UPDATE transaction SET status = ? WHERE transaction_number = ?";
 	
 	private final static int COLUMN_ID = 1;
@@ -45,7 +44,6 @@ public class TransactionRepository {
             while (resultSet.next()) {
                 transactions.add(toTransaction(resultSet));
             }
-            System.out.println(transactions.size());
             return transactions;
         } catch (Exception e) {
             throw DataAccessException.instance("Failed to retrieve transactions: " + e.getMessage());
@@ -71,20 +69,22 @@ public class TransactionRepository {
     
     public void updateTransactionStatus(String transactionNumber, String status) {
     	try {
-			PreparedStatement statement = jdbcConnectionManager.getConnection().prepareStatement(UPDATE_TRANSACTION_STATUS);
+    		final Connection connection = jdbcConnectionManager.getConnection();
+			PreparedStatement statement = connection.prepareStatement(UPDATE_TRANSACTION_STATUS);
 			statement.setString(1, status);
 			statement.setString(2, transactionNumber);
 			
 			int numberRowsAffected = statement.executeUpdate();
+			System.out.println(numberRowsAffected);
     		if (numberRowsAffected > 1)
     			throw new RuntimeException("Number of rows is greater than 1.");
-		} catch (Exception e) {
+    				} catch (Exception e) {
 			e.printStackTrace();
 		}
     }
     
     public void insertTransaction(String transactionNumber, String cartNumber, String room, 
-    							  float grandTotal, String dateCreated) {
+    							  float grandTotal) {
 		try {
 			final Connection connection = jdbcConnectionManager.getConnection();
             final PreparedStatement statement = connection.prepareStatement(INSERT_TRANSACTION_DETAILS);
@@ -92,10 +92,8 @@ public class TransactionRepository {
 	    	statement.setString(2, cartNumber);
 	    	statement.setString(3, room);
 	    	statement.setFloat(4, grandTotal);
-	    	statement.setString(5, dateCreated);
 	    	
-	    	final ResultSet resultSet = statement.executeQuery();
-	    	
+	    	final ResultSet resultSet = statement.executeQuery();	    	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
