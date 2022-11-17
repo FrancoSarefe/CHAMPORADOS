@@ -3,6 +3,8 @@ package bean;
 import java.util.HashMap;
 import java.util.Map;
 
+import service.UserService;
+
 public abstract class FormBean {
 	private Map<String, String> errors;
 	
@@ -27,5 +29,6 @@ public abstract class FormBean {
 		errors.clear();
 	}
 	
-	public abstract boolean validate();
+	public abstract boolean validate(UserService userService);
+
 }

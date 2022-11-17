@@ -18,6 +18,7 @@ import repository.UserRepository;
 import service.BalanceService;
 import service.PersonService;
 import service.UserService;
+import utils.IdGenerator;
 
 public class RegistrationAction implements Action {
 	
@@ -28,6 +29,8 @@ public class RegistrationAction implements Action {
 	private UserService userService;
 	private PersonService personService;
 	private BalanceService balanceService;
+	
+	private IdGenerator idGenerator;
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -42,18 +45,29 @@ public class RegistrationAction implements Action {
 			personService = new PersonService(personRepository);
 			balanceService = new BalanceService(balanceRepository);
 			
+			idGenerator = new IdGenerator(connection);
+			
+			RegistrationFormBean registrationFormBean = toRegistrationFormBean(request);
+			request.setAttribute("registrationFormBean", registrationFormBean);
+			
+			if(registrationFormBean.validate(userService)) {
+				String userId = idGenerator.generateId("User");
+				String personId = idGenerator.generateId("Person");
+				String balanceId = idGenerator.generateId("Balance");
+				
+				userService.insertUser(userId, registrationFormBean.getCompanyEmail(), registrationFormBean.getPassword(), new Date(), false, personId);
+				personService.insertPerson(personId, registrationFormBean.getFirstName(), registrationFormBean.getMiddleName(), registrationFormBean.getLastName(), registrationFormBean.getBirthDate(), registrationFormBean.getContactNumber());
+				balanceService.insertBalance(balanceId, new BigDecimal(3000), userId);
+				return "/registrationSuccess.jsp";
+				
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		RegistrationFormBean registrationFormBean = toRegistrationFormBean(request);
-		request.setAttribute("registrationFormBean", registrationFormBean);
-		if(registrationFormBean.validate()) {
-			userService.insertUser("USR-001", registrationFormBean.getCompanyEmail(), registrationFormBean.getPassword(), new Date(), false, "PER-001");
-			personService.insertPerson("PER-001", registrationFormBean.getFirstName(), registrationFormBean.getMiddleName(), registrationFormBean.getLastName(), registrationFormBean.getBirthDate(), registrationFormBean.getContactNumber());
-			balanceService.insertBalance("WAL-001", new BigDecimal(3000), "USR-001");
-			return "/registrationSuccess.jsp";
-		}
+		
 		return "/registration.jsp";
+		
 	}
 	
 	private RegistrationFormBean toRegistrationFormBean(HttpServletRequest request) {

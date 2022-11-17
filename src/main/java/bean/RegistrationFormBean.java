@@ -1,7 +1,6 @@
 package bean;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -10,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import service.UserService;
 
 @Getter
 @Setter
@@ -28,9 +28,13 @@ public class RegistrationFormBean extends FormBean {
 	private BigDecimal amount;
 	
 	@Override
-	public boolean validate() {
+	public boolean validate(UserService userService) {
 		if(StringUtils.isEmpty(companyEmail)) {
 			addError("email", "Email required.");
+		}
+		
+		if(userService.findEmail(companyEmail)) {
+			addError("email", "Email already exists!");
 		}
 		
 		if(StringUtils.isEmpty(firstName)) {

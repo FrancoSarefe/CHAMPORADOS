@@ -3,7 +3,7 @@
 <jsp:useBean id="registrationFormBean" class="bean.RegistrationFormBean" scope="request"/>
 <html>
 <head>
-<title>CHAMP Cafeteria::Registration</title>
+<title>CHAMP Cafeteria::Login</title>
 <style type="text/css">
 body {
     margin: 50px;
@@ -15,9 +15,9 @@ body {
 </style>
 </head>
 <body>
-    <h2>User Registration</h2>
+    <h2>User Login</h2>
     <hr />
-	<form action="${pageContext.request.contextPath }/register.do">
+	<form action="${pageContext.request.contextPath }/login.do">
 		Company Email <input type="text" name="companyEmail" value="${registrationFormBean.companyEmail }" required>
 		<span class="error"><%= registrationFormBean.getError("email") %></span>
 		<br/>
