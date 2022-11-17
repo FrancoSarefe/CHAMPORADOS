@@ -25,9 +25,9 @@ public class BalanceService {
 
     }
     
-    public boolean insertBalance(String walletNumber, BigDecimal amount) {
+    public boolean insertBalance(String walletNumber, BigDecimal amount, String userNumber) {
     	try {
-            return balanceRepository.insertBalance(walletNumber, amount);
+            return balanceRepository.insertBalance(walletNumber, amount, userNumber);
         } catch (DataAccessException e) {
             throw ServiceException.instance(e.getMessage());
         }

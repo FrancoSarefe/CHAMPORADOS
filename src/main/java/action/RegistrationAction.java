@@ -48,9 +48,9 @@ public class RegistrationAction implements Action {
 		RegistrationFormBean registrationFormBean = toRegistrationFormBean(request);
 		request.setAttribute("registrationFormBean", registrationFormBean);
 		if(registrationFormBean.validate()) {
-			userService.insertUser("USR-001", registrationFormBean.getCompanyEmail(), registrationFormBean.getPassword(), new Date(), false, "WAL-001", "PER-001");
+			userService.insertUser("USR-001", registrationFormBean.getCompanyEmail(), registrationFormBean.getPassword(), new Date(), false, "PER-001");
 			personService.insertPerson("PER-001", registrationFormBean.getFirstName(), registrationFormBean.getMiddleName(), registrationFormBean.getLastName(), registrationFormBean.getBirthDate(), registrationFormBean.getContactNumber());
-			balanceService.insertBalance("WAL-001", new BigDecimal(3000));
+			balanceService.insertBalance("WAL-001", new BigDecimal(3000), "USR-001");
 			return "/registrationSuccess.jsp";
 		}
 		return "/registration.jsp";

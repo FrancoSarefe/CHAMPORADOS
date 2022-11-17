@@ -24,9 +24,9 @@ public class UserService {
 
     }
     
-    public boolean insertUser(String userNumber, String companyEmail, String password, Date dateCreated, Boolean isAdmin, String walletNumber, String personNumber) {
+    public boolean insertUser(String userNumber, String companyEmail, String password, Date dateCreated, Boolean isAdmin, String personNumber) {
     	try {
-            return userRepository.insertUser(userNumber, companyEmail, password, dateCreated, isAdmin, walletNumber, personNumber);
+            return userRepository.insertUser(userNumber, companyEmail, password, dateCreated, isAdmin, personNumber);
         } catch (DataAccessException e) {
             throw ServiceException.instance(e.getMessage());
         }

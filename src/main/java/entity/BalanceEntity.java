@@ -17,4 +17,5 @@ import lombok.Setter;
 public class BalanceEntity {
 	private String walletNumber;
 	private BigDecimal amount;
+	private String userNumber;
 }
