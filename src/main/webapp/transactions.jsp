@@ -17,13 +17,13 @@
 			<table>
 				<thead>
 					<tr>
-						<td>ID</td>
-						<td>Transaction Number</td>
-						<td>Cart Number</td>
-						<td>Room</td>
-						<td>Grand Total</td>
-						<td>Date Created</td>
-						<td>Status</td>
+						<td><b>ID</b></td>
+						<td><b>Transaction Number</b></td>
+						<td><b>Wallet Number</b></td>
+						<td><b>Room</b></td>
+						<td><b>Grand Total</b></td>
+						<td><b>Date Created</b></td>
+						<td><b>Status</b></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -31,7 +31,7 @@
 							<tr>
 								<td> <c:out value="${transaction.id}"/> </td>
 								<td> <c:out value="${transaction.transactionNumber}"/> </td>
-								<td> <c:out value="${transaction.cartNumber}"/> </td>
+								<td> <c:out value="${transaction.walletNumber}"/> </td>
 								<td> <c:out value="${transaction.room}"/> </td>
 								<td> <c:out value="${transaction.grandTotal}"/> </td>
 								<td> <c:out value="${transaction.dateCreated}"/> </td>
@@ -40,23 +40,71 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<div class="form-group">
+				<form action="./transactions" method="GET">
+					<input type="submit" value="Reset Transactions View">
+				</form>
+			</div>
 			<hr/>
-			<b>Update Status by ID</b>
-			<br/>
-			<form action="./transactions?action=updateStatus" method="POST">
-				<!-- Insert dropdown list here for different status values -->
-				<select id="status-update" name="status-update" required>
-					<option value="" disabled hidden selected>Select Status Update</option>
-					<option value="Pending">Pending</option>
-					<option value="Processing">Processing</option>
-					<option value="Cancelled">Cancelled</option>
-					<option value="Complete">Completed</option>
-				</select>
-				<!-- Insert text box here to indicate ID -->
-				<input type="text" id="selected-transaction" name="selected-transaction" placeholder="Indicate Transaction Number here..." required>
-				<!-- Insert submit button for form -->
-				<input type="submit" value="Update Status">
-			</form>
+			<div class="form-group">
+				<b>Search Transactions</b>
+				<br/>
+				<form action="./transactions?action=search" method="POST">
+					<select id="search-filter" name="search-filter" required>
+						<option value="" disabled hidden selected>Select Search Filter</option>
+						<option value="Wallet Number">Wallet Number</option>
+						<option value="Transaction Number">Transaction Number</option>
+					</select>
+					<input type="text" id="search-parameter" name="search-parameter" placeholder="Search Parameter here..." required>
+					<input type="hidden" name="operation" value="search">
+					<br/>
+					<input type="submit" value="Search">
+				</form>
+			</div>
+			<div class="form-group">
+				<b>Update Status by ID</b>
+				<br/>
+				<form action="./transactions?action=updateStatus" method="POST">
+					<select id="status-update" name="status-update" required>
+						<option value="" disabled hidden selected>Select Status Update</option>
+						<option value="Pending">Pending</option>
+						<option value="Processing">Processing</option>
+						<option value="Cancelled">Cancelled</option>
+						<option value="Complete">Completed</option>
+					</select>
+					<input type="text" id="selected-transaction" name="selected-transaction" placeholder="Indicate Transaction Number here..." required>
+					<br/>
+					<input type="hidden" name="operation" value="update">
+					<input type="submit" value="Update Status">
+				</form>
+			</div>
+			<div class="form-group">
+				<b>Force Insert Transaction</b>
+				<br/>
+				<form action="./transactions?action=insertTransaction" method="POST">
+					<table>
+						<thead>
+							<tr>
+								<td>Transaction Number</td>
+								<td>Wallet Number</td>
+								<td>Room</td>
+								<td>Grand Total</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" id="new-transaction" name="new-transaction" placeholder="Transaction Number here..." required></td>
+								<td><input type="text" id="new-wallet-number" name="new-wallet-number" placeholder="Wallet Number here..." required></td>
+								<td><input type="text" id="new-room" name="new-room" placeholder="Room here..." required></td>
+								<td><input type="text" id="new-grand-total" name="new-grand-total" placeholder="Grand Total here..." required></td>
+							</tr>
+						</tbody>
+					</table>
+					<br/>
+					<input type="hidden" name="operation" value="insert">
+					<input type="submit" value="Insert Transaction">
+				</form>
+			</div>
 		</c:if>
 	</body>
 </html>

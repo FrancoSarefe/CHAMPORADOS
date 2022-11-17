@@ -15,7 +15,7 @@ public class TransactionEntity {
 
 	private int id;
 	private String transactionNumber;
-	private String cartNumber;
+	private String walletNumber;
 	private String room;
 	private float grandTotal;
 	private String dateCreated;

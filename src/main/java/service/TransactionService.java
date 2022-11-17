@@ -17,8 +17,12 @@ public class TransactionService {
 		return transactionRepository.findAll();
 	}
 	
-	public List<TransactionEntity> getTransactionsByUserId(int id) {
-		return transactionRepository.findByUserId(id);
+	public List<TransactionEntity> getTransactionsByWalletNumber(String walletNumber) {
+		return transactionRepository.findByWalletNumber(walletNumber);
+	}
+	
+	public List<TransactionEntity> getTransactionByTransactionNumber(String transactionNumber) {
+		return transactionRepository.findByTransactionNumber(transactionNumber);
 	}
 	
 	public void setTransactionStatus(String transactionNumber, String status) {
@@ -26,7 +30,7 @@ public class TransactionService {
 	}
 	
 	public void addTransaction(String transactionNumber, String cartNumber, String room, 
-			  					  float grandTotal, String dateCreated) {
+			  					  float grandTotal) {
 		transactionRepository.insertTransaction(transactionNumber, cartNumber, room, grandTotal);
 	}
 }
