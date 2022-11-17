@@ -3,6 +3,7 @@ package cart;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -20,6 +21,8 @@ import jdbc.JdbcConnectionManager;
 public class SaveToDatabase extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final String INSERT = "INSERT into cart_item (cart_number, quantity, total_price, product_number, user_number) VALUES(?, ?, ?, ?, ?)";
+    private static final String CHECK = "SELECT quantity FROM cart_item WHERE product_number = ? ";
+    private static final String UPDATE = "UPDATE cart_item SET quantity = ? WHERE product_number = ?";
     private JdbcConnectionManager connector;
     private Connection conn;
     private PreparedStatement stmt;
@@ -37,14 +40,29 @@ public class SaveToDatabase extends HttpServlet {
             conn = connector.getConnection();
 
             for (CartItem carts : cart.getCartAsList()) {
-                stmt = conn.prepareStatement(INSERT);
-                stmt.setString(1, carts.getCartNumber());
-                stmt.setInt(2, carts.getQuantity());
-                stmt.setBigDecimal(3, carts.getTotal());
-                stmt.setString(4, carts.getProductNumber());
-                stmt.setString(5, carts.getUserNumber());
-                stmt.executeUpdate();
+
+                stmt = conn.prepareStatement(CHECK);
+                stmt.setString(1, carts.getProductNumber());
+                ResultSet res = stmt.executeQuery();
+
+                if (res.next()) {
+                    int quantity = res.getInt(1);
+                    stmt = conn.prepareStatement(UPDATE);
+
+                    stmt.setInt(1, quantity + carts.getQuantity());
+                    stmt.setString(2, carts.getProductNumber());
+                    stmt.executeQuery();
+                } else {
+                    stmt = conn.prepareStatement(INSERT);
+                    stmt.setString(1, carts.getCartNumber());
+                    stmt.setInt(2, carts.getQuantity());
+                    stmt.setBigDecimal(3, carts.getTotal());
+                    stmt.setString(4, carts.getProductNumber());
+                    stmt.setString(5, carts.getUserNumber());
+                    stmt.executeUpdate();
+                }
             }
+
             // int rowsInserted =
             // if (rowsInserted > cart.countItems()) {
             // throw new Exception("Inserted rows is greater than cart items");
