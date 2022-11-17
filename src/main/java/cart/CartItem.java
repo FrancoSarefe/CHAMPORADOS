@@ -1,63 +1,34 @@
 package cart;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class CartItem {
-    private Map<String, Cart> cart;
+    private String productNumber;
+    private String cartNumber;
+    private int quantity;
+    private BigDecimal totalPrice;
+    private BigDecimal price;
+    private String userNumber;
 
-    public CartItem() {
-        cart = new HashMap<>();
+    public BigDecimal getTotal() {
+       return this.totalPrice = this.price.multiply(BigDecimal.valueOf(this.quantity));
     }
 
-    public int countCartItems() {
-        return cart.size();
+    public void incrementQuantity() {
+        this.quantity += 1;
     }
-
-    public void add(Cart item) {
-        if (item == null) {
-            throw new IllegalArgumentException("Cart cannot be null");
-        }
-        String prodNum = item.getProductNumber().trim();
-        
-        if (cart.containsKey(prodNum)) {
-            cart.get(prodNum).incrementQuantity();
-           
-           
-        } else {
-            cart.put(prodNum, item);
-            System.out.println("add");
-           
-        }
-    }
-
-    public void remove(String productNumber) {
-        Cart item = cart.get(productNumber);
-        if (item == null) {
-            throw new IllegalArgumentException("Product not found");
-        }
-        cart.remove(productNumber.trim());
-
-    }
-
-    public Map<String, Cart> getProduct() {
-        return cart;
-    }
-
-    public List<Cart> getProductAsList() {
-        return new ArrayList<>(cart.values());
-    }
-
-    public BigDecimal cartTotal() {
-        List<Cart> cartItemPrice = new ArrayList<>(cart.values());
-        BigDecimal total = new BigDecimal(0);
-        for (Cart item : cartItemPrice) {
-            total = total.add(item.getTotalPrice());
-        }
-        return total;
-    }
+    
+  
 
 }

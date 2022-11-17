@@ -13,50 +13,58 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = "/cartServlet", loadOnStartup = 1)
 public class CartServlet extends HttpServlet {
-    
+    private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        CartItem cartItem = (CartItem) session.getAttribute("cartItem");
+        Cart cart = (Cart)session.getAttribute("cart");
         String action = request.getParameter("action");
 
-        if (cartItem == null) {
-            cartItem = new CartItem();
+        if (cart == null) {
+            cart = new Cart();
         }
         if (action.equals("add")) {
-            Cart cart = this.toCart(request);
-            
+            CartItem cartItem = this.toCartItem(request);
+            cart.add(cartItem);
 
-            cartItem.add(cart);
+            session.setAttribute("cart", cart);
+            RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/Cart.jsp");
+            dispatch.forward(request, response);
         } else if (action.equals("remove")) {
-            cartItem.remove(request.getParameter("prodNum").trim());
-        }
-      
+            cart.remove(request.getParameter("prodNum"));
 
-        // if (action.equals("save")) {
-        // // todo save to database;
-        // }
-        session.setAttribute("cart", cartItem);
-        RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/CartDisplay.jsp");
-        dispatch.forward(request, response);
+            session.setAttribute("cart", cart);
+            RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/Cart.jsp");
+            dispatch.forward(request, response);
+        } else if (action.equals("save")) {
+            session.setAttribute("cart", cart);
+            RequestDispatcher dispatch = request.getRequestDispatcher("/save");
+            dispatch.forward(request, response);
+        }
+
     }
 
-    private Cart toCart(HttpServletRequest request) {
-        int iprice = Integer.valueOf(request.getParameter("price").trim());
-
-        int cartNumber = 5;
+    private CartItem toCartItem(HttpServletRequest request) {
+        String proNum = request.getParameter("prodNum");
+        String cartNum = "5"; // request.getParameter("cartNum");
         int quantity = Integer.valueOf(request.getParameter("quantity").trim());
-        BigDecimal totalPrice = BigDecimal.valueOf(iprice * quantity);
-        String productNumber = request.getParameter("productNumber");
-        String userNumber = "12";
+        int tempPrice = Integer.valueOf(request.getParameter("price").trim());
 
-        Cart cart = new Cart();
-        cart.setProductNumber(productNumber);
-        cart.setCartNumber(cartNumber);
-        cart.setQuantity(quantity);
-        cart.setTotalPrice(totalPrice);       
-        cart.setUserNumber(userNumber);
-        return cart;
+        BigDecimal price = BigDecimal.valueOf(tempPrice);
+
+        String userNum = "12"; // request.getParameter("userNum");
+
+        CartItem cartItem = new CartItem();
+        cartItem.setPrice(price);
+
+        cartItem.setProductNumber(proNum);
+        cartItem.setCartNumber(cartNum);
+        cartItem.setQuantity(quantity);
+        cartItem.getTotal();
+        cartItem.setUserNumber(userNum);
+
+        return cartItem;
+
     }
 
 }

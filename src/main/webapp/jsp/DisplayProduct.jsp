@@ -47,34 +47,19 @@ List<Product> prod = (List<Product>) request.getAttribute("productlist");
 						<td><%= prods.getQuantity()%>     </td>
 						<td><%= prods.getCategory()%>     </td>
 						<td>
-							<input type="hidden" name="productNumber" value="<%= prods.getProductNumber()%> ">						
+							<input type="hidden" name="prodNum" value="<%= prods.getProductNumber()%> ">						
 							<input type="hidden" name="price" value="<%= prods.getPrice()%> ">
 							<input type="hidden" name="quantity" value="<%= prods.getQuantity()%> ">
-							<input type="submit" value="add to cart">
-						
-						
+							<input type="submit" value="add to cart">		
 						</td>
-						
 					</tr>				
 					</form>
-					
-					
-				
 				<%
 				}
-				%>
-			
-			
-			
-				
-			
-			
-			
-			</tbody>
-		
-		
+				%>			
+			</tbody>		
 		</table>
-	
+		<hr/>
 	</body>
 
 
