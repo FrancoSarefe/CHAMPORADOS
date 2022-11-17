@@ -18,25 +18,25 @@ body {
     <h2>User Registration</h2>
     <hr />
 	<form action="${pageContext.request.contextPath }/register.do">
-		Company Email <input type="text" name="companyEmail" value="${registrationFormBean.companyEmail }">
+		Company Email <input type="text" name="companyEmail" value="${registrationFormBean.companyEmail }" required>
 		<span class="error"><%= registrationFormBean.getError("email") %></span>
 		<br/>
-		First Name <input type="text" name="firstName" value="${registrationFormBean.firstName }">
+		First Name <input type="text" name="firstName" value="${registrationFormBean.firstName }" required>
 		<span class="error"><%= registrationFormBean.getError("firstName") %></span>
 		<br/>
 		Middle Name <input type="text" name="middleName" value="${registrationFormBean.middleName }">
 		<br/>
-		Last Name <input type="text" name="lastName" value="${registrationFormBean.lastName }">
+		Last Name <input type="text" name="lastName" value="${registrationFormBean.lastName }" required>
 		<span class="error"><%= registrationFormBean.getError("lastName") %></span>
 		<br/>
-		Birth Date <input type="date" name="birthDate" value="${registrationFormBean.birthDate }">
+		Birth Date <input type="date" name="birthDate" value="${registrationFormBean.birthDate }" required>
 		<br/>
-		Contact Number <input type="number" name="contactNumber" value="${registrationFormBean.contactNumber }">
+		Contact Number <input type="number" name="contactNumber" value="${registrationFormBean.contactNumber }" required>
 		<br/>
-		Password <input type="password" name="password">
+		Password <input type="password" name="password" required>
 		<span class="error"><%= registrationFormBean.getError("password") %></span>
 		<br/>
-		Confirm Password <input type="password" name="confirmPassword">
+		Confirm Password <input type="password" name="confirmPassword" required>
 		<br/>
 		<input type="submit" value="Register">
 	</form>

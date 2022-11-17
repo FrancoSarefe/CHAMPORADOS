@@ -15,7 +15,7 @@ import jdbc.JdbcConnectionManager;
 public class BalanceRepository {
 	
     private final static String BALANCE_FIND_ALL = "SELECT * FROM Balance";
-    private static final String INSERT_BALANCE = "INSERT INTO Balance(wallet_number, amount) VALUES (?,?)";
+    private static final String INSERT_BALANCE = "INSERT INTO Balance(wallet_number, amount, user_number) VALUES (?,?,?)";
     
     private Connection connection;
     
@@ -30,7 +30,7 @@ public class BalanceRepository {
             final ResultSet resultSet = findAllQuery.executeQuery();
             final List<BalanceEntity> balances = new ArrayList<>();
             while (resultSet.next()) {
-                BalanceEntity balance = new BalanceEntity(resultSet.getString(1), resultSet.getBigDecimal(2));
+                BalanceEntity balance = new BalanceEntity(resultSet.getString(1), resultSet.getBigDecimal(2), resultSet.getString(3));
                 balances.add(balance);
             }
 
@@ -40,12 +40,13 @@ public class BalanceRepository {
         }
     }
 
-    public boolean insertBalance(String walletNumber, BigDecimal amount) {
+    public boolean insertBalance(String walletNumber, BigDecimal amount, String userNumber) {
 		try {
             final PreparedStatement insertQuery = connection.prepareStatement(INSERT_BALANCE);
             
 			insertQuery.setString(1, walletNumber);
 			insertQuery.setBigDecimal(2, amount);
+			insertQuery.setString(3, userNumber);
 
 			insertQuery.executeUpdate();
 			
