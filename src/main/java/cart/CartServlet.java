@@ -2,6 +2,7 @@ package cart;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,26 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = "/cartServlet", loadOnStartup = 1)
 public class CartServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private CartRepository cartRepo;
+    private CartRepositoryService carting;
+    private RequestDispatcher dispatch;
+
+    @Override
+    public void init() throws ServletException {
+        cartRepo = new CartRepository();
+        carting = new CartRepositoryService(cartRepo);
+
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        List<CartItem> cartList = carting.getCart();
+        request.setAttribute("cartDisplay", cartList);
+        dispatch = request.getRequestDispatcher("/jsp/CartViewing.jsp");
+        dispatch.forward(request, response);
+        System.out.println("ellow");
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
@@ -28,18 +49,26 @@ public class CartServlet extends HttpServlet {
             cart.add(cartItem);
 
             session.setAttribute("cart", cart);
-            RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/Cart.jsp");
+            dispatch = request.getRequestDispatcher("/jsp/Cart.jsp");
             dispatch.forward(request, response);
         } else if (action.equals("remove")) {
             cart.remove(request.getParameter("prodNum"));
 
             session.setAttribute("cart", cart);
-            RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/Cart.jsp");
+            dispatch = request.getRequestDispatcher("/jsp/Cart.jsp");
             dispatch.forward(request, response);
         } else if (action.equals("save")) {
-            session.setAttribute("cart", cart);
-            RequestDispatcher dispatch = request.getRequestDispatcher("/save");
+            session.invalidate();
+            request.setAttribute("cart", cart);
+            dispatch = request.getRequestDispatcher("/save");
             dispatch.forward(request, response);
+        } else if (action.equals("delete")) {
+            String temp = (String) request.getParameter("Numb");
+            System.out.println(temp);
+            int prodNum = Integer.valueOf(temp.trim());
+            cartRepo.remove(prodNum);
+            doGet(request, response);
+
         }
 
     }

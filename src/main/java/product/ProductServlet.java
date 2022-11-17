@@ -19,8 +19,8 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        final JdbcConnectionManager connector = new JdbcConnectionManager();
-        repos = new ProductRepository(connector);
+       
+        repos = new ProductRepository();
         prodService = new ProductService(repos);
 
     }

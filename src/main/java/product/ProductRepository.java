@@ -16,8 +16,8 @@ public class ProductRepository {
 
     private final static String GET_ALL = "SELECT product_number, product_name, description, price, quantity, category FROM product ";
 
-    public ProductRepository(JdbcConnectionManager connector) {
-        this.connector = connector;
+    public ProductRepository() {
+        this.connector = new JdbcConnectionManager();
     }
 
     public List<Product> listAll() {
