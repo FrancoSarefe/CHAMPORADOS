@@ -21,7 +21,14 @@ public class UserService {
         } catch (DataAccessException e) {
             throw ServiceException.instance(e.getMessage());
         }
-
+    }
+    
+    public boolean findEmail(String companyEmail) {
+    	try {
+            return userRepository.findEmail(companyEmail);
+        } catch (DataAccessException e) {
+            throw ServiceException.instance(e.getMessage());
+        }
     }
     
     public boolean insertUser(String userNumber, String companyEmail, String password, Date dateCreated, Boolean isAdmin, String personNumber) {
