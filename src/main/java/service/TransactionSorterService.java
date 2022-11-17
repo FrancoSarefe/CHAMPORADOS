@@ -16,6 +16,8 @@ public class TransactionSorterService {
 			return new SortByWalletNumber();
 		case "transaction-number":
 			return new SortByTransactionNumber();
+		case "id":
+			return new SortByID();
 		default:
 			return new SortByID();
 		}

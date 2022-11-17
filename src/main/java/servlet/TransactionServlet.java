@@ -46,7 +46,6 @@ public class TransactionServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		final String operation = req.getParameter("operation");
 		final List<TransactionEntity> transactions;
-		
 		switch (operation) {
 		case "insert":
 			transactions = executeInsertOperation(req);
@@ -57,10 +56,12 @@ public class TransactionServlet extends HttpServlet {
 		case "search":
 			transactions = executeSearchOperation(req);
 			break;
+		case "filter":
+			transactions = executeFilterOperation(req);
+			break;
 		default:
 			transactions = transactionService.getAllTransactions();
 		}
-		Collections.sort(transactions, transactionSorterService.sortByFilter());
 		forwardTransactionsToDispatcher(req, resp, transactions);
 	}
 
@@ -99,6 +100,13 @@ public class TransactionServlet extends HttpServlet {
 		final String selectedId = req.getParameter("selected-transaction");
 		transactionService.setTransactionStatus(selectedId, newStatus);
 		transactions = transactionService.getTransactionByTransactionNumber(selectedId);
+		return transactions;
+	}
+	
+	private List<TransactionEntity> executeFilterOperation(HttpServletRequest req) {
+		final List<TransactionEntity> transactions = transactionService.getAllTransactions();;
+		final String sortFilter = req.getParameter("sort-filter");
+		Collections.sort(transactions, transactionSorterService.sortByFilter(sortFilter));
 		return transactions;
 	}
 

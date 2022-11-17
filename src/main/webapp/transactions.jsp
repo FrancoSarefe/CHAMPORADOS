@@ -41,8 +41,17 @@
 				</tbody>
 			</table>
 			<div class="form-group">
-				<form action="./transactions" method="GET">
-					<input type="submit" value="Reset Transactions View">
+				<b>Sort Transactions View</b><br/>
+				<form action="./transactions?action=sort" method="POST">
+					<select id="sort-filter" name="sort-filter" required>
+						<option value="" disabled hidden selected>Select Sort Filter</option>
+						<option value="id">ID</option>
+						<option value="transaction-number">Transaction Number</option>
+						<option value="wallet-number">Wallet Number</option>
+					</select>
+					<br/>
+					<input type="hidden" name="operation" value="filter">
+					<input type="submit" value="Sort View">
 				</form>
 			</div>
 			<hr/>
@@ -61,8 +70,9 @@
 					<input type="submit" value="Search">
 				</form>
 			</div>
+			<hr/>
 			<div class="form-group">
-				<b>Update Status by ID</b>
+				<b>Update Status by Transaction Number</b>
 				<br/>
 				<form action="./transactions?action=updateStatus" method="POST">
 					<select id="status-update" name="status-update" required>
@@ -79,7 +89,7 @@
 				</form>
 			</div>
 			<div class="form-group">
-				<b>Force Insert Transaction</b>
+				<b>Force Insert New Transaction</b>
 				<br/>
 				<form action="./transactions?action=insertTransaction" method="POST">
 					<table>
@@ -98,11 +108,15 @@
 								<td><input type="text" id="new-room" name="new-room" placeholder="Room here..." required></td>
 								<td><input type="text" id="new-grand-total" name="new-grand-total" placeholder="Grand Total here..." required></td>
 							</tr>
+							<tr>
+								<td>
+									<input type="hidden" name="operation" value="insert">
+									<input type="submit" value="Insert Transaction">
+								<td/>
+							</tr>
 						</tbody>
 					</table>
 					<br/>
-					<input type="hidden" name="operation" value="insert">
-					<input type="submit" value="Insert Transaction">
 				</form>
 			</div>
 		</c:if>
