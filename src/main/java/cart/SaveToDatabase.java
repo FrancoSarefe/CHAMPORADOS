@@ -1,6 +1,7 @@
 package cart;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,8 +22,8 @@ import jdbc.JdbcConnectionManager;
 public class SaveToDatabase extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final String INSERT = "INSERT into cart_item (cart_number, quantity, total_price, product_number, user_number) VALUES(?, ?, ?, ?, ?)";
-    private static final String CHECK = "SELECT quantity FROM cart_item WHERE product_number = ? ";
-    private static final String UPDATE = "UPDATE cart_item SET quantity = ? WHERE product_number = ?";
+    private static final String CHECK = "SELECT quantity, total_price FROM cart_item WHERE product_number = ? ";
+    private static final String UPDATE = "UPDATE cart_item SET quantity = ?, total_price = ? WHERE product_number = ?";
     private JdbcConnectionManager connector;
     private Connection conn;
     private PreparedStatement stmt;
@@ -47,11 +48,13 @@ public class SaveToDatabase extends HttpServlet {
 
                 if (res.next()) {
                     int quantity = res.getInt(1);
+                    BigDecimal price = res.getBigDecimal(2);
                     stmt = conn.prepareStatement(UPDATE);
 
                     stmt.setInt(1, quantity + carts.getQuantity());
-                    stmt.setString(2, carts.getProductNumber());
-                    stmt.executeQuery();
+                    stmt.setBigDecimal(2, price.add(carts.getTotal()));
+                    stmt.setString(3, carts.getProductNumber());
+                    stmt.executeUpdate();
                 } else {
                     stmt = conn.prepareStatement(INSERT);
                     stmt.setString(1, carts.getCartNumber());
