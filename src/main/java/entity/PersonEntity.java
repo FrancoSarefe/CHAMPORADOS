@@ -21,5 +21,4 @@ public class PersonEntity {
 	private String lastName;
 	private Date birthDate;
 	private String contactNumber;
-	private String companyEmail;
 }

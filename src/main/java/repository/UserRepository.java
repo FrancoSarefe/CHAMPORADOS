@@ -15,18 +15,22 @@ import jdbc.JdbcConnectionManager;
 public class UserRepository {
 	
     private final static String USER_FIND_ALL = "SELECT * FROM CHAMP_User";
-    private static final String INSERT_USER = "INSERT INTO CHAMP_User(user_number, password, date_created, is_admin, wallet_number, person_number) VALUES (?,?,?,?,?,?)";
+    private static final String INSERT_USER = "INSERT INTO CHAMP_User(user_number, company_email, password, date_created, is_admin, wallet_number, person_number) VALUES (?,?,?,?,?,?,?)";
+    
+    private Connection connection;
+    
+    public UserRepository(Connection connection) {
+    	this.connection = connection;
+    }
 
     public List<UserEntity> findAll() {
         try {
-        	final Connection connection = JdbcConnectionManager.instance().initiate().getConnection();
-
             final PreparedStatement findAllQuery = connection.prepareStatement(USER_FIND_ALL);
 
             final ResultSet resultSet = findAllQuery.executeQuery();
             final List<UserEntity> users = new ArrayList<>();
             while (resultSet.next()) {
-                UserEntity user = new UserEntity(resultSet.getString(1), resultSet.getString(2), resultSet.getDate(3), resultSet.getBoolean(4), resultSet.getString(5), resultSet.getString(6));
+                UserEntity user = new UserEntity(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5), resultSet.getString(6), resultSet.getString(7));
                 users.add(user);
             }
 
@@ -36,18 +40,17 @@ public class UserRepository {
         }
     }
 
-    public boolean insertUser(String userNumber, String password, Date dateCreated, Boolean isAdmin, String walletNumber, String personNumber) {
+    public boolean insertUser(String userNumber, String companyEmail, String password, Date dateCreated, Boolean isAdmin, String walletNumber, String personNumber) {
 		try {
-			final Connection connection = JdbcConnectionManager.instance().initiate().getConnection();
-
             final PreparedStatement insertQuery = connection.prepareStatement(INSERT_USER);
             
 			insertQuery.setString(1, userNumber);
-			insertQuery.setString(2, password);
-			insertQuery.setDate(3, (java.sql.Date) dateCreated);
-			insertQuery.setString(4, isAdmin.toString());
-			insertQuery.setString(5, walletNumber);
-			insertQuery.setString(6, personNumber);
+			insertQuery.setString(2, companyEmail);
+			insertQuery.setString(3, password);
+			insertQuery.setString(4, dateCreated.toString());
+			insertQuery.setString(5, isAdmin.toString());
+			insertQuery.setString(6, walletNumber);
+			insertQuery.setString(7, personNumber);
 
 			insertQuery.executeUpdate();
 			

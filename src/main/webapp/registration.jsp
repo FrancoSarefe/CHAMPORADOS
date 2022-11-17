@@ -24,6 +24,8 @@ body {
 		First Name <input type="text" name="firstName" value="${registrationFormBean.firstName }">
 		<span class="error"><%= registrationFormBean.getError("firstName") %></span>
 		<br/>
+		Middle Name <input type="text" name="middleName" value="${registrationFormBean.middleName }">
+		<br/>
 		Last Name <input type="text" name="lastName" value="${registrationFormBean.lastName }">
 		<span class="error"><%= registrationFormBean.getError("lastName") %></span>
 		<br/>
@@ -31,10 +33,10 @@ body {
 		<br/>
 		Contact Number <input type="number" name="contactNumber" value="${registrationFormBean.contactNumber }">
 		<br/>
-		Password <input type="text" name="password">
+		Password <input type="password" name="password">
 		<span class="error"><%= registrationFormBean.getError("password") %></span>
 		<br/>
-		Confirm Password <input type="text" name="confirmPassword">
+		Confirm Password <input type="password" name="confirmPassword">
 		<br/>
 		<input type="submit" value="Register">
 	</form>
