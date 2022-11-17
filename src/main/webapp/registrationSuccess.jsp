@@ -18,6 +18,6 @@ body {
     <h2>Success</h2>
     <hr />
 	Welcome,
-	<c:out value="${registrationFormBean.username }"/>
+	<c:out value="${registrationFormBean.firstName }"/>
 </body>
 </html>

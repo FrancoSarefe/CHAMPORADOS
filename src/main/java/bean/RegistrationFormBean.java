@@ -23,7 +23,7 @@ public class RegistrationFormBean extends FormBean {
 	private String companyEmail;
 	private String password;
 	private String confirmPassword;
-	private Date birthDate;
+	private String birthDate;
 	private String contactNumber;
 	private BigDecimal amount;
 	

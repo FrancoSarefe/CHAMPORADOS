@@ -16,6 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserEntity {
 	private String userNumber;
+	private String companyEmail;
 	private String password;
 	private Date dateCreated;
 	private Boolean isAdmin;

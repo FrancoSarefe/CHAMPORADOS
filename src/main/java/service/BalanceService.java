@@ -1,5 +1,7 @@
 package service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import entity.BalanceEntity;
@@ -14,13 +16,21 @@ public class BalanceService {
         this.balanceRepository = balanceRepository;
     }
 
-    public List<BalanceEntity> getBalanceCatalog() {
+    public List<BalanceEntity> getBalanceList() {
         try {
             return balanceRepository.findAll();
         } catch (DataAccessException e) {
             throw ServiceException.instance(e.getMessage());
         }
 
+    }
+    
+    public boolean insertBalance(String walletNumber, BigDecimal amount) {
+    	try {
+            return balanceRepository.insertBalance(walletNumber, amount);
+        } catch (DataAccessException e) {
+            throw ServiceException.instance(e.getMessage());
+        }
     }
 
 }
