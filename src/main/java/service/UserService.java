@@ -31,6 +31,14 @@ public class UserService {
         }
     }
     
+    public boolean findEmailAndPassword(String companyEmail, String password) {
+    	try {
+            return userRepository.findEmailAndPassword(companyEmail, password);
+        } catch (DataAccessException e) {
+            throw ServiceException.instance(e.getMessage());
+        }
+    }
+    
     public boolean insertUser(String userNumber, String companyEmail, String password, Date dateCreated, Boolean isAdmin, String personNumber) {
     	try {
             return userRepository.insertUser(userNumber, companyEmail, password, dateCreated, isAdmin, personNumber);
