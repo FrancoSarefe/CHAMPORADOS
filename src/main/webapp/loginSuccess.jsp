@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" %>
-<jsp:useBean id="registationFormBean" class="bean.RegistrationFormBean" scope="request"/>
+<jsp:useBean id="loginFormBean" class="bean.LoginFormBean" scope="request"/>
 <html>
 <head>
-<title>CHAMP Cafeteria::Registration</title>
+<title>CHAMP Cafeteria::Login</title>
 <style type="text/css">
 body {
     margin: 50px;
@@ -18,6 +18,6 @@ body {
     <h2>Success</h2>
     <hr />
 	Welcome,
-	<c:out value="${registrationFormBean.firstName }"/>
+	<c:out value="${loginFormBean.companyEmail }"/>
 </body>
 </html>
