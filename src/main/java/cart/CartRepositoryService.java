@@ -20,5 +20,13 @@ public class CartRepositoryService {
             throw ServiceException.instance(e.getMessage());
         }
     }
+    
+    public List<CartItem> getCartByWallet(String wallet) {
+        try {
+            return cartRepo.listByWalletNumber(wallet);
+        } catch (DataAccessException e) {
+            throw ServiceException.instance(e.getMessage());
+        }
+    }
 
 }

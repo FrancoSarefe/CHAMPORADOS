@@ -1,5 +1,6 @@
 package cart;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,12 +15,14 @@ public class CartRepository {
     private JdbcConnectionManager connector;
     private Connection conn;
 
-    private final static String GET_ALL = "SELECT cart_number, quantity, total_price, product_number, user_number FROM cart_item ORDER BY product_number";
+    private final static String GET_ALL = "SELECT cart_number, quantity, total_price, product_number, wallet_number FROM cart_item ORDER BY product_number";
+    private final static String GET_BY_WALLETNUMBER = "SELECT cart_number, quantity, total_price, product_number, wallet_number FROM cart_item WHERE wallet_number = ? ORDER BY product_number";
+    
     private final static String DELETE = "DELETE FROM cart_item where product_number = ?";
-
+    private BigDecimal grandTotalPrice;
     public CartRepository() {
         connector = new JdbcConnectionManager();
-
+        grandTotalPrice = new BigDecimal(0);
     }
 
     public List<CartItem> listall() {
@@ -31,6 +34,7 @@ public class CartRepository {
             while (res.next()) {
                 CartItem cart = new CartItem(res.getString(1), res.getInt(2), res.getBigDecimal(3), res.getString(4), res.getString(5));
                 cartList.add(cart);
+                addTotalPrice(res.getBigDecimal(3));
             }
             return cartList;
 
@@ -38,6 +42,25 @@ public class CartRepository {
             throw new DataAccessException("Retrievel Error: " + e.getMessage());
         }
 
+    }
+    
+    public List<CartItem> listByWalletNumber(String walletNumber){
+        try {
+            conn = connector.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(GET_BY_WALLETNUMBER);
+            stmt.setString(1, walletNumber);
+            ResultSet res = stmt.executeQuery();
+            List<CartItem> cartList = new ArrayList<>();
+            while (res.next()) {
+                CartItem cart = new CartItem(res.getString(1), res.getInt(2), res.getBigDecimal(3), res.getString(4), res.getString(5));
+                cartList.add(cart);
+                addTotalPrice(res.getBigDecimal(3));
+            }
+            return cartList;
+
+        } catch (Exception e) {
+            throw new DataAccessException("Retrievel Error: " + e.getMessage());
+        }
     }
 
     public void remove(int prodNum) {
@@ -51,5 +74,13 @@ public class CartRepository {
         } catch (Exception e) {
             throw new DataAccessException("Retrievel Error: " + e.getMessage());
         }
+    }
+    
+    private void addTotalPrice(BigDecimal price) {
+        this.grandTotalPrice = this.grandTotalPrice.add(price);
+    }
+    
+    public BigDecimal getGrandTotalPrice() {
+        return this.grandTotalPrice;
     }
 }

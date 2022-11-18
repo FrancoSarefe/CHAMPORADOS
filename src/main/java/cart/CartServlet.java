@@ -29,11 +29,12 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
+        
         List<CartItem> cartList = carting.getCart();
         request.setAttribute("cartDisplay", cartList);
         dispatch = request.getRequestDispatcher("/jsp/CartViewing.jsp");
         dispatch.forward(request, response);
-        System.out.println("ellow");
+        
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,6 +60,7 @@ public class CartServlet extends HttpServlet {
             dispatch.forward(request, response);
         } else if (action.equals("save")) {
             session.invalidate();
+            
             request.setAttribute("cart", cart);
             dispatch = request.getRequestDispatcher("/save");
             dispatch.forward(request, response);
@@ -81,7 +83,7 @@ public class CartServlet extends HttpServlet {
 
         BigDecimal price = BigDecimal.valueOf(tempPrice);
 
-        String userNum = "12"; // request.getParameter("userNum");
+        String walletNum = "12"; // request.getParameter("userNum");
 
         CartItem cartItem = new CartItem();
         cartItem.setPrice(price);
@@ -90,7 +92,7 @@ public class CartServlet extends HttpServlet {
         cartItem.setCartNumber(cartNum);
         cartItem.setQuantity(quantity);
         cartItem.getTotal();
-        cartItem.setUserNumber(userNum);
+        cartItem.setWalletNumber(walletNum);
 
         return cartItem;
 

@@ -21,7 +21,7 @@ import jdbc.JdbcConnectionManager;
 @WebServlet(urlPatterns = "/save")
 public class SaveToDatabase extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private static final String INSERT = "INSERT into cart_item (cart_number, quantity, total_price, product_number, user_number) VALUES(?, ?, ?, ?, ?)";
+    private static final String INSERT = "INSERT into cart_item (cart_number, quantity, total_price, product_number, wallet_number) VALUES(?, ?, ?, ?, ?)";
     private static final String CHECK = "SELECT quantity, total_price FROM cart_item WHERE product_number = ? ";
     private static final String UPDATE = "UPDATE cart_item SET quantity = ?, total_price = ? WHERE product_number = ?";
     private JdbcConnectionManager connector;
@@ -61,7 +61,7 @@ public class SaveToDatabase extends HttpServlet {
                     stmt.setInt(2, carts.getQuantity());
                     stmt.setBigDecimal(3, carts.getTotal());
                     stmt.setString(4, carts.getProductNumber());
-                    stmt.setString(5, carts.getUserNumber());
+                    stmt.setString(5, carts.getWalletNumber());
                     stmt.executeUpdate();
                 }
             }

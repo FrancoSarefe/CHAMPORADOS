@@ -88,7 +88,8 @@
 					<input type="submit" value="Update Status">
 				</form>
 			</div>
-			<div class="form-group">
+		</c:if>
+		<div class="form-group">
 				<b>Force Insert New Transaction</b>
 				<br/>
 				<form action="./transactions?action=insertTransaction" method="POST">
@@ -119,6 +120,5 @@
 					<br/>
 				</form>
 			</div>
-		</c:if>
 	</body>
 </html>

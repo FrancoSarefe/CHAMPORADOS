@@ -19,15 +19,15 @@ public class CartItem {
     private int quantity;
     private BigDecimal totalPrice;
     private BigDecimal price;
-    private String userNumber;
+    private String walletNumber;
 
-    public CartItem(String cartNumber, int quantity, BigDecimal totalPrice, String productNumber, String userNumber) {
+    public CartItem(String cartNumber, int quantity, BigDecimal totalPrice, String productNumber, String walletNumber) {
         super();
         this.productNumber = productNumber;
         this.cartNumber = cartNumber;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
-        this.userNumber = userNumber;
+        this.walletNumber = walletNumber;
     }
 
     public BigDecimal getTotal() {

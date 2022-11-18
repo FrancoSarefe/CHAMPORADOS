@@ -30,7 +30,7 @@ List<CartItem> cart = (List<CartItem>) request.getAttribute("cartDisplay");
 						<td>Cart Number</td>
 						<td>Quantity</td>
 						<td>Total Price</td>
-						<td>User Number</td>
+						<td>Wallet Number</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -42,7 +42,7 @@ List<CartItem> cart = (List<CartItem>) request.getAttribute("cartDisplay");
 							<td><%= items.getCartNumber()%></td>
 							<td><%= items.getQuantity()%></td>
 							<td><%= items.getTotalPrice()%></td>
-							<td><%= items.getUserNumber()%></td>
+							<td><%= items.getWalletNumber()%></td>
 							<td>
 								<form action="${pageContext.request.contextPath}/cartServlet?action=delete" method="POST">
 									<input type="hidden" name="Numb" value="<%= items.getProductNumber()%>">

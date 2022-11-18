@@ -35,7 +35,7 @@ Cart cart = (Cart) session.getAttribute("cart");
 						<td>Cart Number </td>
 						<td>Quantity </td>
 						<td>Total Price </td>
-						<td>User Number </td>
+						<td>Wallet Number </td>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,7 +47,7 @@ Cart cart = (Cart) session.getAttribute("cart");
 							<td><%= item.getCartNumber()%></td>
 							<td><%= item.getQuantity()%></td>
 							<td><%= item.getTotalPrice()%></td>
-							<td><%= item.getUserNumber()%></td>
+							<td><%= item.getWalletNumber()%></td>
 							<td>
 							<form action="${pageContext.request.contextPath}/cartServlet?action=remove" method="POST">
 								<input type="hidden" name="prodNum" value="<%= item.getProductNumber()%>">
