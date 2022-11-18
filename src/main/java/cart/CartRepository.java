@@ -14,7 +14,7 @@ public class CartRepository {
     private JdbcConnectionManager connector;
     private Connection conn;
 
-    private final static String GET_ALL = "SELECT cart_number, quantity, total_price, product_number, user_number FROM cart_item";
+    private final static String GET_ALL = "SELECT cart_number, quantity, total_price, product_number, user_number FROM cart_item ORDER BY product_number";
     private final static String DELETE = "DELETE FROM cart_item where product_number = ?";
 
     public CartRepository() {
