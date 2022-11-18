@@ -30,6 +30,7 @@ public class ToyRepository {
             final ResultSet resultSet = findAllQuery.executeQuery();
             final List<ToyEntity> toys = new ArrayList<>();
             while (resultSet.next()) {
+            	System.out.println("test");
                 ToyEntity toy = new ToyEntity(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getBigDecimal(4));
                 toys.add(toy);
             }
