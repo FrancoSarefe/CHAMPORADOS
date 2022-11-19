@@ -10,13 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.LoginFormBean;
 import jdbc.JdbcConnectionManager;
+import repository.BalanceRepository;
 import repository.UserRepository;
+import service.BalanceService;
 import service.UserService;
 
 public class LoginAction implements Action {
 	
 	private UserRepository userRepository;
+	private BalanceRepository balanceRepository;
+	
 	private UserService userService;
+	private BalanceService balanceService;
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -25,12 +30,16 @@ public class LoginAction implements Action {
 		try {
 			connection = JdbcConnectionManager.instance().initiate().getConnection();
 			userRepository = new UserRepository(connection);
+			balanceRepository = new BalanceRepository(connection);
+			
 			userService = new UserService(userRepository);
+			balanceService = new BalanceService(balanceRepository);
 			
 			LoginFormBean loginFormBean = toLoginFormBean(request);
 			request.setAttribute("loginFormBean", loginFormBean);
 			
 			if(loginFormBean.validate(userService)) {
+				loginFormBean.setWalletNumber(balanceService.findByUserNumber(loginFormBean.getUserNumber()));
 				return "/loginSuccess.jsp";
 				
 			}

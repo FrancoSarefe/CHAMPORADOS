@@ -19,6 +19,8 @@ import service.UserService;
 public class LoginFormBean extends FormBean {
 	private String companyEmail;
 	private String password;
+	private String userNumber;
+	private String walletNumber;
 	
 	@Override
 	public boolean validate(UserService userService) {
@@ -30,7 +32,8 @@ public class LoginFormBean extends FormBean {
 			addError("password", "Password required.");
 		}
 		
-		if(!userService.findEmailAndPassword(companyEmail, password)) {
+		userNumber = userService.findEmailAndPassword(companyEmail, password);
+		if(StringUtils.isEmpty(userNumber)) {
 			addError("password", "Email and password do not match/exist!");
 		}
 		

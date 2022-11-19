@@ -14,7 +14,7 @@ import jdbc.JdbcConnectionManager;
 
 public class UserRepository {
 	
-    private final static String USER_FIND_ALL = "SELECT * FROM CHAMP_User";
+    private final static String USER_FIND_ALL = "SELECT user_number, company_email, password, date_created, is_admin, person_number FROM CHAMP_User";
     private final static String USER_FIND_EMAIL = USER_FIND_ALL + " WHERE company_email = ?";
     private final static String USER_FIND_EMAIL_PASSWORD = USER_FIND_EMAIL + " AND password = ?";
     private static final String INSERT_USER = "INSERT INTO CHAMP_User(user_number, company_email, password, date_created, is_admin, person_number) VALUES (?,?,?,?,?,?)";
@@ -60,18 +60,20 @@ public class UserRepository {
         }
     }
     
-    public boolean findEmailAndPassword(String companyEmail, String password) {
+    public String findEmailAndPassword(String companyEmail, String password) {
     	try {
             query = connection.prepareStatement(USER_FIND_EMAIL_PASSWORD);
             query.setString(1, companyEmail);
             query.setString(2, password);
 
             resultSet = query.executeQuery();
+            
+            String userId = null;
             if (resultSet.next()) {
-                return true;
+            	userId = resultSet.getString(1);
             }
 
-            return false;
+            return userId;
         } catch (Exception e) {
             throw DataAccessException.instance("failed_to_retrieve_users: " + e.getMessage());
         }

@@ -31,7 +31,7 @@ public class UserService {
         }
     }
     
-    public boolean findEmailAndPassword(String companyEmail, String password) {
+    public String findEmailAndPassword(String companyEmail, String password) {
     	try {
             return userRepository.findEmailAndPassword(companyEmail, password);
         } catch (DataAccessException e) {
