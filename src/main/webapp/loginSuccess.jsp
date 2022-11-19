@@ -18,6 +18,7 @@ body {
     <h2>Success</h2>
     <hr />
 	Welcome,
-	<c:out value="${loginFormBean.companyEmail }"/>
+	<c:out value="${loginFormBean.companyEmail }"/><br/>
+	<c:out value="${loginFormBean.walletNumber }"/>
 </body>
 </html>
