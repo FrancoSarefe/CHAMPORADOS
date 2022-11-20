@@ -49,7 +49,7 @@
             <div class="row" style="background-color: #C91F45;">
                 <div class="col-md-3">
                     <div class="full">
-                        <a class="logo" href="index.html"><img src="./static/images/logo1.png" alt="#" width="200" height="100" /></a>
+                        <a class="logo" href="index.jsp"><img src="./static/images/logo1.png" alt="#" width="200" height="100" /></a>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -85,7 +85,7 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="slider_cont">
-                                                <h3>Discover ChampCafeteria<br>That deliver near You</h3>
+                                                <h3>Every CHAMPion deserves a feast</h3>
                                                 <p>It is a new established cafeteria developed by The CHAMPorado's which is dedicated to the CHAMP cargo system company where the employees can order their food using this website.</p>
                                                 <a class="main_bt_border" href="#">Order Now</a>
                                             </div>
@@ -101,7 +101,7 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="slider_cont">
-                                                <h3>Discover Restaurants<br>That deliver near You</h3>
+                                                <h3>Every CHAMPion deserves a feast</h3>
                                                 <p>It is a new established cafeteria developed by The CHAMPorado's which is dedicated to the CHAMP cargo system company where the employees can order their food using this website.</p>
                                                 <a class="main_bt_border" href="#">Order Now</a>
                                             </div>
@@ -118,7 +118,7 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="slider_cont">
-                                                <h3>Discover Restaurants<br>That deliver near You</h3>
+                                                <h3>Every CHAMPion deserves a feast</h3>
                                                 <p>It is a new established cafeteria developed by The CHAMPorado's which is dedicated to the CHAMP cargo system company where the employees can order their food using this website.</p>
                                                 <a class="main_bt_border" href="#">Order Now</a>
                                             </div>
