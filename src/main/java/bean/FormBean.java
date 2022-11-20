@@ -29,6 +29,6 @@ public abstract class FormBean {
 		errors.clear();
 	}
 	
-	public abstract boolean validate(UserService userService);
+	public abstract boolean validate();
 
 }

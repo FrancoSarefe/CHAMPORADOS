@@ -19,6 +19,6 @@ public class PersonEntity {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private Date birthDate;
+	private String birthDate;
 	private String contactNumber;
 }

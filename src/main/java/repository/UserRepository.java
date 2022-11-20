@@ -8,9 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import entity.UserEntity;
-import exception.UserException;
 import exception.DataAccessException;
-import jdbc.JdbcConnectionManager;
 
 public class UserRepository {
 	
@@ -18,6 +16,8 @@ public class UserRepository {
     private final static String USER_FIND_EMAIL = USER_FIND_ALL + " WHERE company_email = ?";
     private final static String USER_FIND_EMAIL_PASSWORD = USER_FIND_EMAIL + " AND password = ?";
     private static final String INSERT_USER = "INSERT INTO CHAMP_User(user_number, company_email, password, date_created, is_admin, person_number) VALUES (?,?,?,?,?,?)";
+    private static final String UPDATE_USER = "UPDATE CHAMP_User SET company_email = ?, password = ? WHERE user_number = ?";
+    private static final String DELETE_USER = "DELETE FROM CHAMP_User WHERE user_number = ?";
     
     private Connection connection;
     private PreparedStatement query;
@@ -34,7 +34,7 @@ public class UserRepository {
             resultSet = query.executeQuery();
             final List<UserEntity> users = new ArrayList<>();
             while (resultSet.next()) {
-                UserEntity user = new UserEntity(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5), resultSet.getString(6));
+                UserEntity user = new UserEntity(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getBoolean(5), resultSet.getString(6));
                 users.add(user);
             }
 
@@ -60,7 +60,7 @@ public class UserRepository {
         }
     }
     
-    public String findEmailAndPassword(String companyEmail, String password) {
+    public UserEntity findEmailAndPassword(String companyEmail, String password) {
     	try {
             query = connection.prepareStatement(USER_FIND_EMAIL_PASSWORD);
             query.setString(1, companyEmail);
@@ -68,12 +68,12 @@ public class UserRepository {
 
             resultSet = query.executeQuery();
             
-            String userId = null;
+            UserEntity user = null;
             if (resultSet.next()) {
-            	userId = resultSet.getString(1);
+            	user = new UserEntity(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getBoolean(5), resultSet.getString(6));
             }
 
-            return userId;
+            return user;
         } catch (Exception e) {
             throw DataAccessException.instance("failed_to_retrieve_users: " + e.getMessage());
         }
@@ -96,6 +96,41 @@ public class UserRepository {
             
 		} catch (Exception e) {
 			throw DataAccessException.instance("failed_to_insert_user: " + e.getMessage());
+			
+		}
+
+	}
+    
+    public boolean updateUser(String userNumber, String companyEmail, String password) {
+		try {
+            query = connection.prepareStatement(UPDATE_USER);
+            
+			query.setString(1, companyEmail);
+			query.setString(2, password);
+			query.setString(3, userNumber);
+
+			query.executeUpdate();
+			
+			return true;
+            
+		} catch (Exception e) {
+			throw DataAccessException.instance("failed_to_update_user: " + e.getMessage());
+			
+		}
+
+	}
+    
+    public boolean deleteUser(String userNumber) {
+		try {
+            query = connection.prepareStatement(DELETE_USER);
+			query.setString(1, userNumber);
+
+			query.executeUpdate();
+			
+			return true;
+            
+		} catch (Exception e) {
+			throw DataAccessException.instance("failed_to_delete_user: " + e.getMessage());
 			
 		}
 
