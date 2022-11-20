@@ -1,7 +1,10 @@
 package bean;
 
+import java.math.BigDecimal;
+
 import org.apache.commons.lang3.StringUtils;
 
+import entity.BalanceEntity;
 import entity.PersonEntity;
 import entity.UserEntity;
 import lombok.AllArgsConstructor;
@@ -29,21 +32,29 @@ public class LoginFormBean extends FormBean {
 	private String userNumber;
 	private String personNumber;
 	private String walletNumber;
+	private BigDecimal amount;
 	
 	public LoginFormBean(String companyEmail, String password, UserService userService, PersonService personService, BalanceService balanceService) {
 		this.companyEmail = companyEmail;
 		this.password = password;
 		UserEntity userEntity = userService.findEmailAndPassword(companyEmail, password);
-		userNumber = userEntity.getUserNumber();
-		personNumber = userEntity.getPersonNumber();
 		
-		PersonEntity personEntity = personService.findByPersonNumber(personNumber);
-		firstName = personEntity.getFirstName();
-		middleName = personEntity.getMiddleName();
-		lastName = personEntity.getLastName();
-		birthDate = personEntity.getBirthDate().toString();
-		contactNumber = personEntity.getContactNumber();
-		walletNumber = balanceService.findByUserNumber(userNumber);
+		if(!(userEntity == null)) {
+			userNumber = userEntity.getUserNumber();
+			personNumber = userEntity.getPersonNumber();
+			
+			PersonEntity personEntity = personService.findByPersonNumber(personNumber);
+			firstName = personEntity.getFirstName();
+			middleName = personEntity.getMiddleName();
+			lastName = personEntity.getLastName();
+			birthDate = personEntity.getBirthDate().toString();
+			contactNumber = personEntity.getContactNumber();
+			
+			BalanceEntity balanceEntity = balanceService.findByUserNumber(userNumber);
+			walletNumber = balanceEntity.getWalletNumber();
+			amount = balanceEntity.getAmount();
+			
+		}
 		
 	}
 	

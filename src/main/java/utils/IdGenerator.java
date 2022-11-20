@@ -9,7 +9,7 @@ public class IdGenerator {
 	private static final String USER_LAST_ROW = "SELECT user_number FROM CHAMP_User WHERE id = (SELECT MAX(id) FROM CHAMP_User)";
 	private static final String PERSON_LAST_ROW = "SELECT person_number FROM Person WHERE id = (SELECT MAX(id) FROM Person)";
 	private static final String BALANCE_LAST_ROW = "SELECT wallet_number FROM Balance WHERE id = (SELECT MAX(id) FROM Balance)";
-	private static final String PRODUCT_LAST_ROW = "SELECT product_number FROM Product WHERE id = (SELECT MAX(id) FROM Product)";
+	private static final String PRODUCT_LAST_ROW = "SELECT product_number FROM CHAMP_Product WHERE id = (SELECT MAX(id) FROM CHAMP_Product)";
 	private static final String CART_ITEM_LAST_ROW = "SELECT cart_item_number FROM Cart_Item WHERE id = (SELECT MAX(id) FROM Cart_Item)";
 	private static final String TRANSACTION_LAST_ROW = "SELECT transaction_number FROM Transaction WHERE id = (SELECT MAX(id) FROM Transaction)";
 	
