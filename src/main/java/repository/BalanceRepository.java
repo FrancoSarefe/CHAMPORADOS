@@ -44,19 +44,19 @@ public class BalanceRepository {
         }
     }
     
-    public String findByUserNumber(String userNumber) {
+    public BalanceEntity findByUserNumber(String userNumber) {
     	try {
             query = connection.prepareStatement(BALANCE_FIND_USER_NUMBER);
             query.setString(1, userNumber);
 
             resultSet = query.executeQuery();
             
-            String walletNumber = null;
+            BalanceEntity balanceEntity = null;
             if (resultSet.next()) {
-            	walletNumber = resultSet.getString(1);
+            	balanceEntity = new BalanceEntity(resultSet.getString(1), resultSet.getBigDecimal(2), resultSet.getString(3));
             }
 
-            return walletNumber;
+            return balanceEntity;
         } catch (Exception e) {
             throw DataAccessException.instance("failed_to_retrieve_users: " + e.getMessage());
         }
@@ -81,7 +81,7 @@ public class BalanceRepository {
 
 	}
     
-    public boolean deletetBalance(String userNumber) {
+    public boolean deleteBalance(String userNumber) {
 		try {
             query = connection.prepareStatement(DELETE_BALANCE);
 			query.setString(1, userNumber);

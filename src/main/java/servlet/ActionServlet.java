@@ -41,11 +41,13 @@ public class ActionServlet extends HttpServlet {
 
     private void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+        
             final String servletPath = request.getServletPath();
             final String actionClass = actionConfig.getString(servletPath.substring(1));
 
             if (actionClass == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, String.format("Action class not found: %s", actionClass));
+            
             } else {
                 final Action action = (Action)Class.forName(actionClass).newInstance();
                 final String viewPath = action.execute(request, response);

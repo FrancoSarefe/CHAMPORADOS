@@ -25,7 +25,7 @@ public class BalanceService {
 
     }
     
-    public String findByUserNumber(String userNumber) {
+    public BalanceEntity findByUserNumber(String userNumber) {
     	try {
             return balanceRepository.findByUserNumber(userNumber);
         } catch (DataAccessException e) {
@@ -43,7 +43,7 @@ public class BalanceService {
     
     public boolean deleteBalance(String userNumber) {
     	try {
-            return balanceRepository.deletetBalance(userNumber);
+            return balanceRepository.deleteBalance(userNumber);
         } catch (DataAccessException e) {
             throw ServiceException.instance(e.getMessage());
         }
