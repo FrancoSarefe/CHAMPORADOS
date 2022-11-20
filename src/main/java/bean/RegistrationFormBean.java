@@ -27,10 +27,16 @@ public class RegistrationFormBean extends FormBean {
 	private String contactNumber;
 	private BigDecimal amount;
 	
+	private UserService userService;
+	
+	public RegistrationFormBean(UserService userService) {
+		this.userService = userService;
+	}
+	
 	@Override
-	public boolean validate(UserService userService) {
+	public boolean validate() {
 		if(StringUtils.isEmpty(companyEmail)) {
-			addError("email", "Email required.");
+			addError("email", "Email is required.");
 		}
 		
 		if(userService.findEmail(companyEmail)) {
@@ -38,15 +44,23 @@ public class RegistrationFormBean extends FormBean {
 		}
 		
 		if(StringUtils.isEmpty(firstName)) {
-			addError("firstName", "First name required.");
+			addError("firstName", "First name is required.");
 		}
 		
 		if(StringUtils.isEmpty(lastName)) {
-			addError("lastName", "Last name required.");
+			addError("lastName", "Last name is required.");
+		}
+		
+		if(StringUtils.isEmpty(birthDate)) {
+			addError("birthDate", "Birth date is required.");
+		}
+		
+		if(StringUtils.isEmpty(contactNumber)) {
+			addError("contactNumber", "Contact number is required.");
 		}
 		
 		if(StringUtils.isEmpty(password)) {
-			addError("password", "Password required.");
+			addError("password", "Password is required.");
 		} else if(!password.equals(confirmPassword)) {
 			addError("password", "Please confirm password.");
 		}

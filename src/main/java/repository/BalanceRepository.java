@@ -17,6 +17,7 @@ public class BalanceRepository {
     private final static String BALANCE_FIND_ALL = "SELECT wallet_number, amount, user_number FROM Balance";
     private final static String BALANCE_FIND_USER_NUMBER = BALANCE_FIND_ALL + " WHERE user_number = ?";
     private static final String INSERT_BALANCE = "INSERT INTO Balance(wallet_number, amount, user_number) VALUES (?,?,?)";
+    private static final String DELETE_BALANCE = "DELETE FROM Balance WHERE user_number = ?";
     
     private Connection connection;
     private PreparedStatement query;
@@ -30,7 +31,7 @@ public class BalanceRepository {
         try {
             query = connection.prepareStatement(BALANCE_FIND_ALL);
 
-            final ResultSet resultSet = query.executeQuery();
+            resultSet = query.executeQuery();
             final List<BalanceEntity> balances = new ArrayList<>();
             while (resultSet.next()) {
                 BalanceEntity balance = new BalanceEntity(resultSet.getString(1), resultSet.getBigDecimal(2), resultSet.getString(3));
@@ -63,18 +64,34 @@ public class BalanceRepository {
 
     public boolean insertBalance(String walletNumber, BigDecimal amount, String userNumber) {
 		try {
-            final PreparedStatement insertQuery = connection.prepareStatement(INSERT_BALANCE);
+            query = connection.prepareStatement(INSERT_BALANCE);
             
-			insertQuery.setString(1, walletNumber);
-			insertQuery.setBigDecimal(2, amount);
-			insertQuery.setString(3, userNumber);
+			query.setString(1, walletNumber);
+			query.setBigDecimal(2, amount);
+			query.setString(3, userNumber);
 
-			insertQuery.executeUpdate();
+			query.executeUpdate();
 			
 			return true;
             
 		} catch (Exception e) {
 			throw DataAccessException.instance("failed_to_insert_balance: " + e.getMessage());
+			
+		}
+
+	}
+    
+    public boolean deletetBalance(String userNumber) {
+		try {
+            query = connection.prepareStatement(DELETE_BALANCE);
+			query.setString(1, userNumber);
+
+			query.executeUpdate();
+			
+			return true;
+            
+		} catch (Exception e) {
+			throw DataAccessException.instance("failed_to_delete_balance: " + e.getMessage());
 			
 		}
 

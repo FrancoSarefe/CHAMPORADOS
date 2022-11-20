@@ -26,9 +26,33 @@ public class PersonService {
 
     }
     
+    public PersonEntity findByPersonNumber(String personNumber) {
+    	try {
+            return personRepository.findByPersonNumber(personNumber);
+        } catch (DataAccessException e) {
+            throw ServiceException.instance(e.getMessage());
+        }
+    }
+    
     public boolean insertPerson(String personNumber, String firstName, String middleName, String lastName, String birthDate, String contactNumber) {
     	try {
             return personRepository.insertPerson(personNumber, firstName, middleName, lastName, birthDate, contactNumber);
+        } catch (DataAccessException e) {
+            throw ServiceException.instance(e.getMessage());
+        }
+    }
+    
+    public boolean updatePerson(String personNumber, String firstName, String middleName, String lastName, String birthDate, String contactNumber) {
+    	try {
+            return personRepository.updatePerson(personNumber, firstName, middleName, lastName, birthDate, contactNumber);
+        } catch (DataAccessException e) {
+            throw ServiceException.instance(e.getMessage());
+        }
+    }
+    
+    public boolean deletePerson(String personNumber) {
+    	try {
+            return personRepository.deletePerson(personNumber);
         } catch (DataAccessException e) {
             throw ServiceException.instance(e.getMessage());
         }

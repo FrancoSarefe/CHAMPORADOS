@@ -1,6 +1,5 @@
 package entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +17,8 @@ public class UserEntity {
 	private String userNumber;
 	private String companyEmail;
 	private String password;
-	private Date dateCreated;
+	private String dateCreated;
 	private Boolean isAdmin;
 	private String personNumber;
+
 }

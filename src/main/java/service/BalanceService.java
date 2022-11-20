@@ -40,5 +40,13 @@ public class BalanceService {
             throw ServiceException.instance(e.getMessage());
         }
     }
+    
+    public boolean deleteBalance(String userNumber) {
+    	try {
+            return balanceRepository.deletetBalance(userNumber);
+        } catch (DataAccessException e) {
+            throw ServiceException.instance(e.getMessage());
+        }
+    }
 
 }
