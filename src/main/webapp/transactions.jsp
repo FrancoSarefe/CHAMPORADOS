@@ -28,15 +28,15 @@
 				</thead>
 				<tbody>
 					<c:forEach var="transaction" items="${transactions}">
-							<tr>
-								<td> <c:out value="${transaction.id}"/> </td>
-								<td> <c:out value="${transaction.transactionNumber}"/> </td>
-								<td> <c:out value="${transaction.walletNumber}"/> </td>
-								<td> <c:out value="${transaction.room}"/> </td>
-								<td> <c:out value="${transaction.grandTotal}"/> </td>
-								<td> <c:out value="${transaction.dateCreated}"/> </td>
-								<td> <c:out value="${transaction.status}"/> </td>
-							</tr>
+						<tr>
+							<td> <c:out value="${transaction.id}"/> </td>
+							<td> <c:out value="${transaction.transactionNumber}"/> </td>
+							<td> <c:out value="${transaction.walletNumber}"/> </td>
+							<td> <c:out value="${transaction.room}"/> </td>
+							<td> <c:out value="${transaction.grandTotal}"/> </td>
+							<td> <c:out value="${transaction.dateCreated}"/> </td>
+							<td> <c:out value="${transaction.status}"/> </td>
+						</tr>
 					</c:forEach>
 				</tbody>
 			</table>

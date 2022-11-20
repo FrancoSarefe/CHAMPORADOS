@@ -15,9 +15,9 @@ public class CartRepository {
     private JdbcConnectionManager connector;
     private Connection conn;
 
-    private final static String GET_ALL = "SELECT cart_number, quantity, total_price, product_number, wallet_number FROM cart_item ORDER BY product_number";
-    private final static String GET_BY_WALLETNUMBER = "SELECT cart_number, quantity, total_price, product_number, wallet_number FROM cart_item WHERE wallet_number = ? ORDER BY product_number";
-    
+    private final static String GET_ALL = "SELECT cart_item_number, quantity, total_price, product_number, wallet_number FROM cart_item ORDER BY product_number";
+    private final static String GET_BY_WALLETNUMBER = "SELECT cart_item_number, quantity, total_price, product_number, wallet_number FROM cart_item WHERE wallet_number = ? AND is_checked_out = 'false' ORDER BY product_number";
+    private final static String UPDATE_IS_CHECKED_OUT = "UPDATE cart_item SET is_checked_out = 'true' WHERE is_checked_out = 'false'";
     private final static String DELETE = "DELETE FROM cart_item where product_number = ?";
     private BigDecimal grandTotalPrice;
     public CartRepository() {
@@ -59,7 +59,7 @@ public class CartRepository {
             return cartList;
 
         } catch (Exception e) {
-            throw new DataAccessException("Retrievel Error: " + e.getMessage());
+            throw new DataAccessException("Retrieval Error: " + e.getMessage());
         }
     }
 
@@ -74,6 +74,16 @@ public class CartRepository {
         } catch (Exception e) {
             throw new DataAccessException("Retrievel Error: " + e.getMessage());
         }
+    }
+    
+    public void updateCartItemIsCheckedOut() {
+    	try {
+    		conn = connector.getConnection();
+    		PreparedStatement statement = conn.prepareStatement(UPDATE_IS_CHECKED_OUT);
+    		statement.executeUpdate();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+		}
     }
     
     private void addTotalPrice(BigDecimal price) {

@@ -29,4 +29,7 @@ public class CartRepositoryService {
         }
     }
 
+    public void updateCartItemIsCheckedOut() {
+    	cartRepo.updateCartItemIsCheckedOut();
+    }
 }
