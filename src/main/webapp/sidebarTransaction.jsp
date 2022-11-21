@@ -75,14 +75,14 @@
 				<a href="./loginSuccess.jsp" class="nav_link"> <i class='bx bx-user nav_icon'></i>
 					<span class="nav_name">Users</span>
 
-				</a> <a href="./product.do?action=display" class="nav_link active">
+				</a> <a href="./product.do?action=display" class="nav_link">
 					<i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Products</span>
 
 				</a> <a href="./Cart.jsp" class="nav_link"> <i
 					class='bx bx-message-square-check nav_icon'></i> <span
 					class="nav_name">Cart</span>
 
-				</a> <a href="./transactions" class="nav_link"> <i
+				</a> <a href="./transactions" class="nav_link active"> <i
 					class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Transactions</span>
 				</a>
 			</div>

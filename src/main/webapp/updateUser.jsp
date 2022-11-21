@@ -7,7 +7,7 @@
 		<title>CHAMP Cafeteria::Update User</title>
 		<link rel="stylesheet" href="./static/css/login.css">
 	</head>
-	<body>
+	<body id="body-pd">
 	<%--     <h2>User Registration</h2>
 	    <hr />
 		<form action="${pageContext.request.contextPath }/register.do">
@@ -33,6 +33,7 @@
 			<br/>
 			<input type="submit" value="Register">
 		</form> --%>
+		<%@ include file="./sidebarUser.jsp" %>
 		<main id="main" role="main" class=" aui-page-panel">
 	
 			<div id="login-container">
@@ -123,5 +124,6 @@
 			</div>
 	
 		</main>
+		<script type="text/javascript" src="./static/js/sidebar.js"></script>
 	</body>
 </html>
