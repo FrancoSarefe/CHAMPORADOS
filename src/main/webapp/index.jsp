@@ -87,7 +87,7 @@
                                             <div class="slider_cont">
                                                 <h3>Every CHAMPion deserves a feast</h3>
                                                 <p>It is a new established cafeteria developed by The CHAMPorado's which is dedicated to the CHAMP cargo system company where the employees can order their food using this website.</p>
-                                                <a class="main_bt_border" href="#">Order Now</a>
+                                                <a class="main_bt_border" href="./login.jsp">Order Now</a>
                                             </div>
                                         </div>
                                         <div class="col-md-7">
@@ -103,7 +103,7 @@
                                             <div class="slider_cont">
                                                 <h3>Every CHAMPion deserves a feast</h3>
                                                 <p>It is a new established cafeteria developed by The CHAMPorado's which is dedicated to the CHAMP cargo system company where the employees can order their food using this website.</p>
-                                                <a class="main_bt_border" href="#">Order Now</a>
+                                                <a class="main_bt_border" href="./login.jsp">Order Now</a>
                                             </div>
                                         </div>
                                         <div class="col-md-7 full text_align_center">
@@ -120,7 +120,7 @@
                                             <div class="slider_cont">
                                                 <h3>Every CHAMPion deserves a feast</h3>
                                                 <p>It is a new established cafeteria developed by The CHAMPorado's which is dedicated to the CHAMP cargo system company where the employees can order their food using this website.</p>
-                                                <a class="main_bt_border" href="#">Order Now</a>
+                                                <a class="main_bt_border" href="./login.jsp">Order Now</a>
                                             </div>
                                         </div>
                                         <div class="col-md-7 full text_align_center">
@@ -175,7 +175,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>Homemade</h3>
-                        <h4><span class="theme_color">$</span>10</h4>
+                        <h4><span class="theme_color">&#8369</span>180.00</h4>
                     </div>
                 </div>
                 <div class="item">
@@ -184,7 +184,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>Noodles</h3>
-                        <h4><span class="theme_color">$</span>20</h4>
+                        <h4><span class="theme_color">&#8369</span>200.00</h4>
                     </div>
                 </div>
                 <div class="item">
@@ -193,7 +193,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>Egg</h3>
-                        <h4><span class="theme_color">$</span>30</h4>
+                        <h4><span class="theme_color">&#8369</span>150.00</h4>
                     </div>
                 </div>
                 <div class="item">
@@ -202,7 +202,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>Sushi Dizzy</h3>
-                        <h4><span class="theme_color">$</span>40</h4>
+                        <h4><span class="theme_color">&#8369</span>100.00</h4>
                     </div>
                 </div>
                 <div class="item">
@@ -211,7 +211,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>The Coffee Break</h3>
-                        <h4><span class="theme_color">$</span>50</h4>
+                        <h4><span class="theme_color">&#8369</span>450.00</h4>
                     </div>
                 </div>
                 <div class="item">
@@ -220,7 +220,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>Homemade</h3>
-                        <h4><span class="theme_color">$</span>10</h4>
+                        <h4><span class="theme_color">&#8369</span>80.00</h4>
                     </div>
                 </div>
                 <div class="item">
@@ -229,7 +229,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>Noodles</h3>
-                        <h4><span class="theme_color">$</span>20</h4>
+                        <h4><span class="theme_color">&#8369</span>200.00</h4>
                     </div>
                 </div>
                 <div class="item">
@@ -238,7 +238,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>Egg</h3>
-                        <h4><span class="theme_color">$</span>30</h4>
+                        <h4><span class="theme_color">&#8369</span>350.00</h4>
                     </div>
                 </div>
                 <div class="item">
@@ -247,7 +247,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>Sushi Dizzy</h3>
-                        <h4><span class="theme_color">$</span>40</h4>
+                        <h4><span class="theme_color">&#8369</span>400.00</h4>
                     </div>
                 </div>
                 <div class="item">
@@ -256,7 +256,7 @@
                     </div>
                     <div class="product_blog_cont">
                         <h3>The Coffee Break</h3>
-                        <h4><span class="theme_color">$</span>50</h4>
+                        <h4><span class="theme_color">&#8369</span>220.00</h4>
                     </div>
                 </div>
 

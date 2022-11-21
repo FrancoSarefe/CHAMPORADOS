@@ -18,6 +18,8 @@ public class BalanceRepository {
     private final static String BALANCE_FIND_USER_NUMBER = BALANCE_FIND_ALL + " WHERE user_number = ?";
     private static final String INSERT_BALANCE = "INSERT INTO Balance(wallet_number, amount, user_number) VALUES (?,?,?)";
     private static final String DELETE_BALANCE = "DELETE FROM Balance WHERE user_number = ?";
+    private final static String BALANCE_FIND_BY_WALLET_NUMBER = BALANCE_FIND_ALL + " WHERE wallet_number = ?";
+    private final static String UPDATE_BALANCE_AMOUNT = "UPDATE balance SET amount = ? WHERE wallet_number = ?";
     
     private Connection connection;
     private PreparedStatement query;
@@ -96,4 +98,30 @@ public class BalanceRepository {
 		}
 
 	}
+    
+    public BalanceEntity findByWalletNumber(String walletNumber) {
+    	try {
+    		final PreparedStatement statement = connection.prepareStatement(BALANCE_FIND_BY_WALLET_NUMBER);
+    		statement.setString(1, walletNumber);
+            final ResultSet resultSet = statement.executeQuery();
+            BalanceEntity balance = null;
+            while (resultSet.next()) {
+            	 balance = new BalanceEntity(resultSet.getString(1), resultSet.getBigDecimal(2), resultSet.getString(3));
+            }
+            return balance;
+    	} catch (Exception e) {
+    		throw DataAccessException.instance("failed_to_retrieve_balance: " + e.getMessage());
+    	}
+    }
+    
+    public void updateBalanceAmount(BigDecimal amount, String walletNumber) {
+    	try {
+			final PreparedStatement statement = connection.prepareStatement(UPDATE_BALANCE_AMOUNT);
+			statement.setBigDecimal(1, amount);
+			statement.setString(2, walletNumber);
+			statement.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    }
 }

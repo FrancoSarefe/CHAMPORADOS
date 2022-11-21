@@ -33,7 +33,7 @@
 		</style>
 	</head> -->
 	<body id="body-pd">
-		<%@ include file="./sidebar.jsp" %>
+		<%@ include file="./sidebarUser.jsp" %>
 		<h2>Welcome, <c:out value="${loginFormBean.firstName }"/></h2><br/>
 		<h4>Your current balance is: <b>Php <c:out value="${loginFormBean.amount }"/></b></h4><br/>
 		<form action="${pageContext.request.contextPath }/updateUser.jsp">
@@ -42,5 +42,6 @@
 		<form action="${pageContext.request.contextPath }/deleteUser.do">
 			<button type="submit" class="btn btn-primary">Delete Account</button><br/>
 		</form>
+		<script type="text/javascript" src="./static/js/sidebar.js"></script>
 	</body>
 </html>

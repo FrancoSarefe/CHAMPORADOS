@@ -183,7 +183,7 @@
 												<i class="fa-solid fa-sort" style="color: white;"></i>
 											</button>
 										</th>
-										<th>Actions</th>
+										<th style="width:">Actions</th>
 
 									</tr>
 								</thead>
@@ -246,6 +246,18 @@
 													style="background-color: #C91F45;">
 													<i class="far fa-trash-alt"></i>
 												</button>
+												
+												<form
+													action="${pageContext.request.contextPath}/cartServlet?action=add"
+													method="POST" style="width=20px; float: right; margin-left: -15px; margin-top: -10px">
+													<input type="hidden" name="prodNum" value="${item.productNumber} ">						
+													<input type="hidden" name="price" value="${item.price} ">
+													<input type="hidden" name="quantity" value="${item.quantity} ">
+													<button id="actionButton" type="submit"
+														style="background-color: green;">
+														<i class="fa-solid fa-plus"></i>
+													</button>
+												</form>
 
 
 											</td>
@@ -284,8 +296,8 @@
 
 				<fieldset>
 
-					<input type="text" name="product_Name" placeholder="Product Name" pattern="[a-zA-Z]{10,}"
-						title="Product Name must contain at least 10 letters or more!" required>
+					<input type="text" name="product_Name" placeholder="Product Name" pattern="[a-zA-Z]{5,}"
+						title="Product Name must contain at least 5 letters or more!" required>
 					
 					<textarea name="product_Description"
 						placeholder="Product Description" maxlength="100" minlength="20"
@@ -388,8 +400,8 @@
 						
 						<input type="text"
 						name="product_Name" id="product_NameUpdate"
-						placeholder="Product Name" pattern="[a-zA-Z]{10,}"
-						title="Product Name must contain at least 10 letters or more!"  required>
+						placeholder="Product Name" pattern="[a-zA-Z]{5,}"
+						title="Product Name must contain at least 5 letters or more!"  required>
 						
 						
 					<textarea name="product_Description" id="product_DescriptionUpdate"

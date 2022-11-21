@@ -55,7 +55,7 @@ public class RegistrationAction implements Action {
 				String personId = idGenerator.generateId("Person");
 				String balanceId = idGenerator.generateId("Balance");
 				
-				userService.insertUser(userId, registrationFormBean.getCompanyEmail(), registrationFormBean.getPassword(), new Date(), false, personId);
+				userService.insertUser(userId, registrationFormBean.getCompanyEmail(), registrationFormBean.getPassword(), new Date(), true, personId);
 				personService.insertPerson(personId, registrationFormBean.getFirstName(), registrationFormBean.getMiddleName(), registrationFormBean.getLastName(), registrationFormBean.getBirthDate(), registrationFormBean.getContactNumber());
 				balanceService.insertBalance(balanceId, new BigDecimal(3000), userId);
 				return "/registrationSuccess.jsp";

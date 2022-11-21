@@ -48,5 +48,13 @@ public class BalanceService {
             throw ServiceException.instance(e.getMessage());
         }
     }
+    
+    public BalanceEntity getBalanceByWalletNumber(String walletNumber) {
+    	return balanceRepository.findByWalletNumber(walletNumber);
+    }
+    
+    public void setBalanceAmount(BigDecimal amount, String walletNumber) {
+    	balanceRepository.updateBalanceAmount(amount, walletNumber);
+    }
 
 }
